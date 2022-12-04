@@ -59,8 +59,8 @@ public class NoneCommand extends Command {
 	 */
 	@Override
 	public ExecutionResult execute(GameWorld game) {
-		ExecutionResult exRes = new ExecutionResult(true);
-		return exRes;
+		ExecutionResult none = new ExecutionResult(true);
+		return none;
 	}
 
 }

@@ -71,7 +71,7 @@ public class ResetCommand extends Command {
 	@Override
 	public ExecutionResult execute(GameWorld game){
 		
-		if(this.level==null || this.seed <= 0) 
+		if(this.level == null || this.seed <= 0) 
 			game.reset();
 		else 
 		{
@@ -95,8 +95,8 @@ public class ResetCommand extends Command {
 		
 		if(parameters.length==3) {
 			
-			Level level=Level.valueOfIgnoreCase(parameters[1]);
-			long seed= Long.parseLong(parameters[2] );
+			Level level = Level.valueOfIgnoreCase(parameters[1]);
+			long seed = Long.parseLong(parameters[2]);
 			this.level = level;
 			this.seed = seed;
 			

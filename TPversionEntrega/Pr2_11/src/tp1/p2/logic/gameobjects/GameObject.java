@@ -18,16 +18,18 @@ public abstract class GameObject implements GameItem {
 	protected int row;		
 	
 	protected int lives;
-	protected int coolDown;
+	protected int cooldownCycles;
 
-	GameObject() {
+	GameObject() 
+	{
+		
 	}
 
 	GameObject(GameWorld game, int col, int row) {
 		this.game = game;
 		this.col = col;
 		this.row = row;
-		this.coolDown = 0;
+		this.cooldownCycles = 0;
 	}
 	/**
 	 * Informa de si el GameObject se encuentra en la posición introducida 
@@ -63,10 +65,16 @@ public abstract class GameObject implements GameItem {
 	 */
 	public boolean isAlive() 
 	{
-		if(this.lives > 0) 
-			return true;
-		else 
-			return false;
+		boolean vivo;
+		if(this.lives > 0)
+		{
+			vivo = true;
+		}
+		else
+		{
+			vivo = false;
+		}
+		return vivo;
 	}
 	/**
 	 * Hace daño al GameObject 
@@ -85,9 +93,12 @@ public abstract class GameObject implements GameItem {
 	 *         otherwise.
 	 */
 	public String toString() {
-		if (isAlive()) {
+		if (isAlive()) 
+		{
 			return getSymbol();
-		} else {
+		} 
+		else 
+		{
 			return "";
 		}
 	}	

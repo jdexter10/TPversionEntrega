@@ -47,7 +47,7 @@ public class CherryBomb extends Plant {
 	 */
 	@Override
 	protected String getSymbol() {
-		if(coolDown != 2) 
+		if(cooldownCycles != 2) 
 			return Messages.CHERRY_BOMB_SYMBOL;
 		//Si la planta va a explotar en el siguiente ciclo la "c" minúscula de su symbol se convertirá en mayúscula
 		else
@@ -66,7 +66,7 @@ public class CherryBomb extends Plant {
 
 	@Override
 	public void update() {
-		boolean carryAction = coolDown == ACTION_DELAY;
+		boolean carryAction = cooldownCycles == ACTION_DELAY;
 		GameItem item;
 		if(isAlive() && carryAction) {
 			//Se ejecuta la acción de explotar
@@ -76,10 +76,10 @@ public class CherryBomb extends Plant {
 			lives = 0;
 	    }
 		else 
-			coolDown++;
+			cooldownCycles++;
 	}
 	/**
-	 * Ejecuta la acción que lleva a cabo.
+	 * Ejecuta la accion que lleva a cabo.
 	 */
 	@Override
 	public void delayedAction() 

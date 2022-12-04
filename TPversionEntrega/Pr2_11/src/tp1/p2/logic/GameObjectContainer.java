@@ -31,7 +31,7 @@ public class GameObjectContainer {
 	{
 		//Añade el  objeto a la lista
 		gameObjects.add(gameObject);
-		//El objeto ejecuta su acción de entrada
+		//El objeto ejecuta su accion de entrada
 		gameObject.onEnter();
 	}
 	/**
@@ -46,10 +46,11 @@ public class GameObjectContainer {
 	public boolean isPositionEmpty(int col, int row) 
 	{
 		//Recorre todos los objetos de la lista
-		for(GameObject o: gameObjects)
+		for(GameObject g: gameObjects)
 		{
 			//Si alguno de ellos coincide en posición
-			if(o.isInPosition(col, row)){
+			if(g.isInPosition(col, row))
+			{
 				return false;
 			}
 		}
@@ -88,13 +89,14 @@ public class GameObjectContainer {
 	 * 
 	 * @return El GameObject en la posición. Si no hay devuelve null
 	 */
+	
+	//busca si hay un objeto en esa posicion y devuelve el tipo
 	public GameObject getObjectInPosition(int col, int row) 
 	{
-		for(GameObject o: gameObjects) 
+		for(GameObject g: gameObjects) 
 		{
-			//Si el objeto coincide con la posición y si es una planta o un zombie
-			if(o.isInPosition(col,row) && (o.receivePlantAttack(0)||o.receiveZombieAttack(0)))
-				return o;
+			if(g.isInPosition(col,row) && (g.receivePlantAttack(0)||g.receiveZombieAttack(0)))
+				return g;
 		}
 		return null;
 	}
@@ -105,11 +107,9 @@ public class GameObjectContainer {
 	{
 		for(int i = 0; i < gameObjects.size();i++) 
 		{
-			//Actualiza todos los objetos del juego
 			gameObjects.get(i).update();
 		}
-		//Elimina los muertos de la lista
-		removeDead();
+		removeDead(); //elimina los objetos ya muertos todavia existentes
 	}
 	/**
 	 * Devuelve el status de los objetos de la lista
@@ -121,19 +121,27 @@ public class GameObjectContainer {
 	 */
 	public String positionToString(int col, int row) 
 	{
-		GameItem o = getObjectInPosition(col,row);//Coge el objeto en la posición si lo hay
-		GameItem s = getSunInPosition(col, row);//Coge el sol en la posición si lo hay
+		GameItem g = getObjectInPosition(col,row);
+		GameItem s = getSunInPosition(col, row);
+		String string = ""; 
 		
-		if(s != null || o != null ) {
+		if(s != null || g != null ) 
+		{
 			if(s == null) 
-				return o.toString();
-			else if(o == null) 
-				return s.toString();
-			else
-				return s.toString()  + o.toString();
+			{
+				string = g.toString();
+			}
 				
+			else if(g == null) 
+			{
+				string = s.toString();
+			}
+			else
+			{
+				string = (s.toString()  +  g.toString());
+			}
 		}
-		return "";
+		return string;
 	}
 	/**
 	 *Comprueba si hay un sol en la posición introducida y si es así lo devuelve
@@ -146,44 +154,37 @@ public class GameObjectContainer {
 	public GameItem getGameItemInPosition(int col, int row) {
 		
 		
-		for(GameObject o: gameObjects) {
-			//si coinciden en posición lo devuelve	
-			if(o.isInPosition(col, row))
+		for(GameObject g: gameObjects) {
+			if(g.isInPosition(col, row))
 			{	
-				return o;	
+				return g;	
 			}
 		}
 
 		return null;
 	}
 	/**
-	 * Comprueba si hay un sol en la posición introducida y si es así lo devuelve
+	 * Comprueba si hay un sol en la posicion introducida y si es así lo devuelve
 	 * 
-	 * @param col Posición de la columna introducida.
-	 * @param row Posición de la fila introducida.
+	 * @param col Posicion de la columna introducida.
+	 * @param row Posicion de la fila introducida.
 	 * 
 	 * @return El sol en la posición introducida. Si no hay devuelve null
 	 */
 	public GameItem getSunInPosition(int col, int row) {
-		
-		
-		for(GameObject o: gameObjects) {
-			//Si coinciden en posición y si no es ni una planta ni un zombie			
-			if(o.isInPosition(col, row) && !o.receivePlantAttack(0) && !o.receiveZombieAttack(0) ){
-				
-				return o;
-				
+		for(GameObject g: gameObjects) {	
+			if(g.isInPosition(col, row) && !g.receivePlantAttack(0) && !g.receiveZombieAttack(0) ){
+				return g;
 			}
 			
 		}
-
 		return null;
 	}
 	/**
-	 * Ejecuta la acción de catch de todos los objetos de la lista
+	 * Ejecuta la accion de catch de todos los objetos de la lista
 	 * 
-	 * @param col Posición de la columna introducida.
-	 * @param row Posición de la fila introducida.
+	 * @param col Posicion de la columna introducida.
+	 * @param row Posicion de la fila introducida.
 	 * 
 	  * @return <code>true</code> Si se ha cogido el objeto<code>false</code>
 	 *         otherwise.
@@ -191,17 +192,16 @@ public class GameObjectContainer {
 	public boolean catchObjects(int col, int row) 
 	{
 		int i = 0;
-		boolean catched = false;
-		while(!catched && i < gameObjects.size()) {
-			//Si es un sol y coincide con la posición
+		boolean ok = false;
+		while(!ok && i < gameObjects.size()) {
+			//si gameobject = sol && esta en col, row
 			if(gameObjects.get(i).isInPosition(col, row) && !gameObjects.get(i).receivePlantAttack(0) && !gameObjects.get(i).receiveZombieAttack(0)) 
 			{
-				//Lo coge
-				catched = gameObjects.get(i).catchObject();
+				ok = gameObjects.get(i).catchObject();
 			}
-			i++;
+			++i;
 		}
-		return catched;
+		return ok;
 	}
 
 }

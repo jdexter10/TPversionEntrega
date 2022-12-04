@@ -8,10 +8,10 @@ import tp1.p2.logic.gameobjects.GameObject;
 import tp1.p2.logic.gameobjects.Zombie;
 
 public interface GameWorld {
-
-	public static final int NUM_ROWS = 4;
-
+	
 	public static final int NUM_COLS = 8;
+	
+	public static final int NUM_ROWS = 4;
 	
 	public static final int START_SUNS = 50;
 
@@ -60,7 +60,7 @@ public interface GameWorld {
 	 */
 	public boolean execute(Command command);
 	/**
-	 * Devuelve el item en la posición introducida.
+	 * Devuelve el item en la posicion introducida.
 	 * 
 	 * @param col Posición de la columna del objeto
 	 * @param row Posición de la fila del objeto.

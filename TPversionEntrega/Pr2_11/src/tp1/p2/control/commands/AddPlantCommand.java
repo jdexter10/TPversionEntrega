@@ -123,7 +123,6 @@ public class AddPlantCommand extends Command implements Cloneable {
 		row = Integer.parseInt(parameters[3]);
 		
 		
-		
 		try {
 			aux = new AddPlantCommand(true);
 
@@ -133,7 +132,7 @@ public class AddPlantCommand extends Command implements Cloneable {
 			aux = (AddPlantCommand)this.clone();
 		} 
 		catch (CloneNotSupportedException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		return aux;

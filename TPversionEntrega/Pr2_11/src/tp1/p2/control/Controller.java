@@ -64,33 +64,43 @@ public class Controller {
 		while (!game.isFinished() && !game.isPlayerQuits()) {
 
 			// 1. Draw
-			if (refreshDisplay) {
+			if (refreshDisplay) 
+			{
 				printGame();
 			}
 
 			// 2. User action
 			String[] words = prompt();
 
-			if (words.length == 0) {
+			if (words.length == 0) 
+			{
 				System.out.println(error(Messages.UNKNOWN_COMMAND));
-			} else {
+			} 
+			else 
+			{
 				Command command = Command.parse(words);
-				if (command != null) {
+				if (command != null) 
+				{
 					// 3-4. Game Action & Update
 					command.create(words);
 					refreshDisplay = game.execute(command);
-					if(refreshDisplay)//Se actualiza el juego
-					game.update();
-				} else {
+					if(refreshDisplay)
+					{
+						game.update();
+
+					}
+				}
+				else 
+				{
 					refreshDisplay = false;
 				}
 			}
 		}
 
-		if (refreshDisplay) {
+		if (refreshDisplay) 
+		{
 			printGame();
 		}
-
 		printEndMessage();
 	}
 

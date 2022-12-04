@@ -26,20 +26,25 @@ public class Peashooter extends Plant {
 	{
 		boolean found = false;
 		int i = this.col + 1;//Empieza a buscar desde la posición siguiente a la que está la peashooter
-		if(isAlive()) {  
+		if(isAlive()) 
+		{  
 			while(!found && i < game.NUM_COLS)//Mientras que no se haya encontrado un zombie al que disparar o mientras que no se hayan revisado todas las columnas de la misma fila
 			{
 				GameItem item = game.getGameItemInPosition(i, row);//Se comprueba si hay un objeto en la posición buscada
-			    if(item != null && coolDown >= ATTACK_SPEED)//Si lo hay y la peashooter no está en cooldown le dispara
+			    if(item != null && cooldownCycles >= ATTACK_SPEED)//Si lo hay y la peashooter no está en cooldownCycles le dispara
 			    {  
 			    	found = item.receivePlantAttack(DAMAGE);//Le ataca y si no era un zombie se sigue el bucle
 			    	if(found)
-			    	coolDown = 0;//Si ha disparado a un zombie se resetea su coolDwon
+			    	{
+			    		cooldownCycles = 0;//Si ha disparado a un zombie se resetea su cooldownCycles
+			    	}
 			    }
-			    i++;//Si no se ha encontrado se comprueba la siguiente fila
+			    ++i;//Si no se ha encontrado se comprueba la siguiente fila
 		    }
-				if(!found)//Si no ha disparado se suma uno de coolDown
-					coolDown++;
+			if(!found)//Si no ha disparado se suma uno de cooldownCycles
+			{
+				cooldownCycles++;
+			}
 	    }
 		
 	}

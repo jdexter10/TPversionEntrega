@@ -59,16 +59,18 @@ public abstract class Plant extends GameObject{
 	 * Realiza las acciones correspondientes una vez añadido el objeto
 	 */
 	@Override
-	public void onEnter() {}
+	public void onEnter()
+	{
+		
+	}
 	/**
 	 * Realiza las acciones correspondientes una vez eliminado el objeto
 	 */
 	@Override
-	public void onExit() {}
-	
-	
-	
-	
+	public void onExit() 
+	{
+		
+	}
 }
 	
 	

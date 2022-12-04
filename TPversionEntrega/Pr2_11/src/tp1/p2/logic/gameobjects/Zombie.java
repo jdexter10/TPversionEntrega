@@ -15,8 +15,9 @@ public class Zombie extends GameObject {
 		super(game,col,row);
 		this.lives = getEndurance();
 	}
-	public Zombie() {
-		// TODO Auto-generated constructor stub
+	public Zombie() 
+	{
+		
 	}
 		
 	
@@ -36,24 +37,24 @@ public class Zombie extends GameObject {
 			
 				if((game.isPositionEmpty(this.col - 1,row)) || (!game.isPositionEmpty(this.col - 1,row) && !item.receivePlantAttack(0) && !item.receiveZombieAttack(0)))//Si la posición está libre o si en ella está un sol 
 				{
-					if(coolDown == getSpeed())//Si no está en coolDwon de moverse
+					if(cooldownCycles == getSpeed())//Si no está en coolDwon de moverse
 					{
 					col--;//Se mueve
-					coolDown = 0;//Se resetea el coolDown de moverse
+					cooldownCycles = 0;//Se resetea el cooldownCycles de moverse
 					}
 					else
-						coolDown++;//Si no ataca ni se mueve se actualiza su coolDown
+						cooldownCycles++;//Si no ataca ni se mueve se actualiza su cooldownCycles
 				}
 			}
-			else//Si hay un objeto enfrente actualiza su coolDown
+			else//Si hay un objeto enfrente actualiza su cooldownCycles
 			{
-				if(coolDown == getSpeed())//Si no está en coolDwon de moverse
+				if(cooldownCycles == getSpeed())//Si no está en coolDwon de moverse
 				{
 				col--;//Se mueve
-				coolDown = 0;//Se resetea el coolDown de moverse
+				cooldownCycles = 0;//Se resetea el cooldownCycles de moverse
 				}
 				else
-					coolDown++;//Si no ataca ni se mueve se actualiza su coolDown
+					cooldownCycles++;//Si no ataca ni se mueve se actualiza su cooldownCycles
 			}
 		}
 	   

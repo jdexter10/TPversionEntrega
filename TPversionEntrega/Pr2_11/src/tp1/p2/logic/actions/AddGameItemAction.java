@@ -5,14 +5,14 @@ import tp1.p2.logic.gameobjects.GameObject;
 
 public class AddGameItemAction implements GameAction {
 
-	private GameObject gameObject;
+	private GameObject go;
 
 	public AddGameItemAction(GameObject gameObject) {
-		this.gameObject = gameObject;
+		this.go = gameObject;
 	}
 
 	@Override
 	public void execute(GameWorld game) {
-		game.addItem(gameObject);
+		game.addItem(go);
 	}
 }

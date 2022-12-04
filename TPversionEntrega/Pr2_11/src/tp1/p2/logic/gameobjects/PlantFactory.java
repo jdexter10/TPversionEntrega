@@ -44,6 +44,7 @@ public class PlantFactory {
 			break;
 		}
 		return aux;	
+		//cambiar case por if
 	}
 
 	public static List<Plant> getAvailablePlants() {
@@ -53,6 +54,8 @@ public class PlantFactory {
 	/*
 	 * Avoid creating instances of this class
 	 */
-	private PlantFactory() {
+	private PlantFactory() 
+	{
+		
 	}
 }

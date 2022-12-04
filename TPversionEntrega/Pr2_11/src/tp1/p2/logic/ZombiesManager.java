@@ -20,14 +20,14 @@ public class ZombiesManager {
 
 	private int remainingZombies;
 	
-	private int currentZombies;
+	private int zombiesAlived;
 
 
 	public ZombiesManager(GameWorld game, Level level, Random rand) {
 		this.game = game;
 		this.level = level;
 		this.rand = rand;
-		this.currentZombies = 0;
+		this.zombiesAlived = 0;
 		this.remainingZombies = level.getNumberOfZombies();
 		this.rand = rand;
 	}
@@ -82,7 +82,7 @@ public class ZombiesManager {
 			//Se resta de los zombies que quedan por salir
 			remainingZombies--;
 			//Se suman a los zombies que han entrado al campo
-			currentZombies++;
+			zombiesAlived++;
 
 		}
 		return canAdd;
@@ -95,7 +95,7 @@ public class ZombiesManager {
 	 */
 	public int getCurrentZombies() 
 	{
-		return this.currentZombies;
+		return this.zombiesAlived;
 	}
 	/**
 	 * Comprueba si la posición está vacía desde el game
@@ -123,7 +123,7 @@ public class ZombiesManager {
 	 */
 	public void zombieDied() 
 	{
-		currentZombies--;
+		zombiesAlived--;
 	}
 	
 }

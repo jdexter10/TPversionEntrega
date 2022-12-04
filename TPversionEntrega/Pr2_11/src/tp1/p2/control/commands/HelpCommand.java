@@ -60,7 +60,6 @@ public class HelpCommand extends Command {
 			buffer.append(command.getDetails());
 			buffer.append(Messages.HELP_DETAILS_COMMAND_HELP_SEPARATOR);
 			buffer.append(command.getHelp());
-			// TODO add your code here
 			/* @formatter:on */
 		}
 		System.out.println(buffer.toString());

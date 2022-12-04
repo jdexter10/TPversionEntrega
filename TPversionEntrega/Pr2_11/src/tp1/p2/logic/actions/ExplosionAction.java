@@ -32,37 +32,49 @@ public class ExplosionAction implements GameAction {
 		for(int i = col - 1; i <= col + 1;i++)
 		{
 			item = game.getGameItemInPosition(i, row - 1);
-		    if(item != null) {  
+		    if(item != null) 
+		    {  
 		    	if(attackZombies)
+		    	{
 		    		item.receivePlantAttack(damage);
+		    	}
 		    	else
+		    	{
 		    		item.receiveZombieAttack(damage);
-		    		
+		    	}
 		    }
 		}
 		//Posiciones afectafas a la izquierda y a la derecha
-		for(int i = row; i <= row + 1;i++)
+		for(int i = row; i <= row + 1; ++i)
 		{
-			//Línea de la izquierda
+			//Linea de la izquierda
 			item = game.getGameItemInPosition(col - 1, i);
 		    if(item != null) {  
 		    	if(attackZombies)
+		    	{
 		    		item.receivePlantAttack(damage);
+		    	}
 		    	else
+		    	{
 		    		item.receiveZombieAttack(damage);
+		    	}	
 		    }
-		  //Línea de la derecha
+		  //Linea de la derecha
 		    item = game.getGameItemInPosition(col + 1,  i);
 		    if(item != null) 
 		    {
 		    	if(attackZombies)
+		    	{
 		    		item.receivePlantAttack(damage);
+		    	}
 		    	else
+		    	{
 		    		item.receiveZombieAttack(damage);
+		    	}
 		    }
 		    
 		}
-		//Posición por debajo de la explosión
+		//Posicion por debajo de la explosion
 		item = game.getGameItemInPosition(col, row + 1);
 		if(item != null) 
 	    {

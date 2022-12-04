@@ -26,18 +26,17 @@ public class Sunflower extends Plant {
 	
 	public void update() 
 	{
-		if(coolDown ==  GENERATE_SUNS && isAlive())//Si está viva y no está en coolDown
+		if(cooldownCycles == GENERATE_SUNS && isAlive())//Si está viva y no está en cooldownCycles
 		{
 			game.addSun();//Añade un sol al juego
-			coolDown = 0;//Se resetea el coolDown
+			cooldownCycles = 0;//Se resetea el cooldownCycles
 		}
-		coolDown++;
+		cooldownCycles++;
 	}
 	
 	@Override
 	public boolean catchObject() 
 	{
-		// TODO Auto-generated method stub
 		return false;
 	}
 	/**

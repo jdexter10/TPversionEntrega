@@ -25,7 +25,7 @@ public class Game implements GameStatus, GameWorld{
 	
 	private boolean playerQuits;
 	
-	private int sunCoins;
+	private int suncoins;
 	
 	private Random rand;
 	
@@ -59,7 +59,7 @@ public class Game implements GameStatus, GameWorld{
 	public void reset(Level level, long seed) {
 		System.out.println(String.format(Messages.CONFIGURED_LEVEL, level.name()));
 		System.out.println(String.format(Messages.CONFIGURED_SEED, seed));
-		sunCoins = START_SUNS;
+		suncoins = START_SUNS;
 		rand = new Random(seed);
 		cycle = 0;
 		playerQuits = false;
@@ -81,7 +81,7 @@ public class Game implements GameStatus, GameWorld{
 			// 2. Execute game Actions
 			
 			zombieManager.addZombie();
-			//sunCoins += generatedSuns;
+			//suncoins += generatedSuns;
 			// 3. Game object updates
 			container.update();
 			sunsManager.update();
@@ -212,7 +212,7 @@ public class Game implements GameStatus, GameWorld{
 	@Override
 	public int getSuncoins() 
 	{
-		return this.sunCoins;
+		return this.suncoins;
 	}
 	/**
 	 * Get the number of generated suns.
@@ -357,10 +357,10 @@ public class Game implements GameStatus, GameWorld{
 	 */
 	@Override
 	public boolean tryToBuy(int cost) {
-		if(cost > sunCoins)
+		if(cost > suncoins)
 			return false;
 		else 
-			sunCoins -= cost;
+			suncoins -= cost;
 		return true;
 	}
 	/**
@@ -391,7 +391,7 @@ public class Game implements GameStatus, GameWorld{
 	 */
 	public void addCatchedSuns(int value) 
 	{
-		this.sunCoins += value;
+		this.suncoins += value;
 		sunsManager.setCatchedSuns(value);
 	}
 }
