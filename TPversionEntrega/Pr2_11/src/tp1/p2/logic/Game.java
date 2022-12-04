@@ -19,17 +19,17 @@ public class Game implements GameStatus, GameWorld{
 
 	private Level level;
 	
-	private int cycle;
+	private int cycle = 0;
 
 	private GameObjectContainer container;
 	
 	private boolean playerQuits;
 	
-	private int suncoins;
+	private int suncoins = START_SUNS;
 	
 	private Random rand;
 	
-	private ZombiesManager zombieManager;
+	private ZombiesManager zombiesManager;
 		
 	private Deque<GameAction> actions;
 	
@@ -63,11 +63,7 @@ public class Game implements GameStatus, GameWorld{
 		rand = new Random(seed);
 		cycle = 0;
 		playerQuits = false;
-		zombieManager = new ZombiesManager(this,level,rand);
-		container = new GameObjectContainer();
-		actions = new ArrayDeque<>();
-		sunsManager = new SunsManager(this,rand);
-
+		inicializar();
 	}
 
 	/**
@@ -80,8 +76,8 @@ public class Game implements GameStatus, GameWorld{
 
 			// 2. Execute game Actions
 			
-			zombieManager.addZombie();
-			//suncoins += generatedSuns;
+			zombiesManager.addZombie();
+			//suncoins += generatedSuns; revisar esto
 			// 3. Game object updates
 			container.update();
 			sunsManager.update();
@@ -92,16 +88,22 @@ public class Game implements GameStatus, GameWorld{
 				executePendingActions();
 				// Remove dead 
 				deadRemoved = this.container.removeDead();
-
 			}
-			//Actualiza el ciclo del juego
 			this.cycle++;
 
 			// 6. Notify commands that a new cycle started
 			Command.newCycle();
 	}
+	
+	public void inicializar() {
+		zombiesManager = new ZombiesManager(this,level,rand);
+		container = new GameObjectContainer();
+		actions = new ArrayDeque<>();
+		sunsManager = new SunsManager(this,rand);
+	}
+	
 	/**
-	 * Añade una acción que se ha llevado a cabo por un objeto del juego
+	 * Añade una accion que se ha llevado a cabo por un objeto del juego
 	 * 
 	 * @param gameAction Acción a añadir.
 	 */
@@ -271,7 +273,7 @@ public class Game implements GameStatus, GameWorld{
 	@Override
 	public int getRemainingZombies() 
 	{
-		return zombieManager.getRemainingZombies();
+		return zombiesManager.getRemainingZombies();
 	}
 	/**
 	 * Comprueba si todos los zombies han muerto
@@ -281,7 +283,7 @@ public class Game implements GameStatus, GameWorld{
 	@Override
 	public boolean allZombiesDead() 
 	{
-		if(zombieManager.getCurrentZombies() == 0 && zombieManager.getRemainingZombies() == 0) 
+		if(zombiesManager.getCurrentZombies() == 0 && zombiesManager.getRemainingZombies() == 0) 
 		{
 			return true;
 		}
@@ -364,11 +366,11 @@ public class Game implements GameStatus, GameWorld{
 		return true;
 	}
 	/**
-	 * Informa de que un zombie ha muerto al zombieManager
+	 * Informa de que un zombie ha muerto al zombiesManager
 	 */
 	@Override
 	public void zombieDied() {
-		zombieManager.zombieDied();
+		zombiesManager.zombieDied();
 		
 	}
 	/**

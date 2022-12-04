@@ -66,9 +66,9 @@ public class AddPlantCheatCommand extends Command{
 	}
 
 	/**
-	 * Comprueba si se puede añadir la planta. Si es así la añade
+	 * Comprueba si se puede añadir la planta. Si es asi la a�ade
 	 * 
-	 * @param game Juego
+	 * @param game 
 	 * 
 	 * @return ExecutionResult con true o con el mensaje de error
 	 */

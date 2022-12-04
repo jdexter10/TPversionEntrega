@@ -29,7 +29,7 @@ public class GameObjectContainer {
 	 */
 	public void add(GameObject gameObject)
 	{
-		//Añade el  objeto a la lista
+		//A�ade el  objeto a la lista
 		gameObjects.add(gameObject);
 		//El objeto ejecuta su accion de entrada
 		gameObject.onEnter();
@@ -45,10 +45,8 @@ public class GameObjectContainer {
 	 */
 	public boolean isPositionEmpty(int col, int row) 
 	{
-		//Recorre todos los objetos de la lista
 		for(GameObject g: gameObjects)
 		{
-			//Si alguno de ellos coincide en posición
 			if(g.isInPosition(col, row))
 			{
 				return false;
@@ -65,13 +63,12 @@ public class GameObjectContainer {
 	public boolean removeDead() 
 	{
 		boolean dead = false;
-		//Recorre toda la lista
 		for(int i = 0; i < gameObjects.size();i++) 
 		{
 			//Si un objeto de la lista no esta vivo
 			if(!gameObjects.get(i).isAlive()) 
 			{
-				//Hace que ejecute su acción de morir
+				//Hace que ejecute su accion de morir
 				gameObjects.get(i).onExit();
 				//Lo quita de la lista
 				gameObjects.remove(i);
