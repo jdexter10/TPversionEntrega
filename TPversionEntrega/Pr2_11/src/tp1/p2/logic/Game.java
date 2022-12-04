@@ -75,7 +75,6 @@ public class Game implements GameStatus, GameWorld{
 			executePendingActions();
 
 			// 2. Execute game Actions
-			
 			zombiesManager.addZombie();
 			//suncoins += generatedSuns; revisar esto
 			// 3. Game object updates
@@ -83,7 +82,8 @@ public class Game implements GameStatus, GameWorld{
 			sunsManager.update();
 			// 4. & 5. Remove dead and execute pending actions
 			boolean deadRemoved = true;
-			while (deadRemoved || areTherePendingActions()) {
+			while (deadRemoved || areTherePendingActions()) 
+			{
 				// Execute pending actions
 				executePendingActions();
 				// Remove dead 
@@ -94,7 +94,10 @@ public class Game implements GameStatus, GameWorld{
 			// 6. Notify commands that a new cycle started
 			Command.newCycle();
 	}
-	
+	/**
+	 * inicializa las respectivas listas.
+	 * 
+	 */
 	public void inicializar() {
 		zombiesManager = new ZombiesManager(this,level,rand);
 		container = new GameObjectContainer();
@@ -105,7 +108,7 @@ public class Game implements GameStatus, GameWorld{
 	/**
 	 * A帽ade una accion que se ha llevado a cabo por un objeto del juego
 	 * 
-	 * @param gameAction Acci贸n a a帽adir.
+	 * @param gameAction Accion a a馻dir.
 	 */
 	public void pushAction(GameAction gameAction) {
 	    this.actions.addLast(gameAction);
@@ -167,8 +170,8 @@ public class Game implements GameStatus, GameWorld{
 	/**
 	 * Intenta coger un objeto del juego.
 	 * 
-	 * @param col Posici贸n de la columna del objeto
-	 * @param row Posici贸n de la fila del objeto
+	 * @param col Posicion de la columna del objeto
+	 * @param row Posicion de la fila del objeto
 	 * 
 	 * @return <code>true</code> Si se ha encontrado el objeto, <code>false</code>
 	 *         otherwise.
@@ -192,7 +195,7 @@ public class Game implements GameStatus, GameWorld{
 		return true;
 	}
 	/**
-	 * Devuelve el item en la posici贸n introducida.
+	 * Devuelve el item en la posicion introducida.
 	 * 
 	 * @param col Posici贸n de la columna del objeto
 	 * @param row Posici贸n de la fila del objeto.
@@ -207,9 +210,9 @@ public class Game implements GameStatus, GameWorld{
 		return aux;
 	}
 	/**
-	 * Get available suncoins
+	 * Get available suncoins.
 	 * 
-	 * @return the available suncoins
+	 * @return available suncoins
 	 */
 	@Override
 	public int getSuncoins() 
@@ -236,9 +239,9 @@ public class Game implements GameStatus, GameWorld{
 		return sunsManager.getCatchedSuns();
 	}
 	/**
-	 * Comprueba si el jugador se ha ido del juego
+	 * Revisa si el Jugador ha accionado exit() del game.
 	 * 
-	 * @return {@code true} Si el jugador se ha retirado {@code false} otherwise.
+	 * @return {@code true} Si Jugador exit() {@code false} sino.
 	 */
 	@Override
 	public boolean isPlayerQuits() 

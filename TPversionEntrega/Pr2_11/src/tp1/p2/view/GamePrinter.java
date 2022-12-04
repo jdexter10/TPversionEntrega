@@ -48,20 +48,11 @@ public class GamePrinter {
 	protected String getInfo() {
 		StringBuilder buffer = new StringBuilder();
 		
-		buffer.append(Messages.NUMBER_OF_CYCLES);
-		buffer.append(SPACE);
-		buffer.append(game.getCycle());
-		buffer.append(NEW_LINE);
+		buffer.append(Messages.NUMBER_OF_CYCLES + SPACE + game.getCycle() +  NEW_LINE);
 
-		buffer.append(Messages.NUMBER_OF_COINS);
-		buffer.append(SPACE);
-		buffer.append(game.getSuncoins());
-		buffer.append(NEW_LINE);
+		buffer.append(Messages.NUMBER_OF_COINS + SPACE + game.getSuncoins() +  NEW_LINE);
 		
-		buffer.append(Messages.REMAINING_ZOMBIES);
-		buffer.append(SPACE);
-		buffer.append(game.getRemainingZombies());
-		buffer.append(NEW_LINE);
+		buffer.append(Messages.REMAINING_ZOMBIES + SPACE + game.getRemainingZombies() +  NEW_LINE);
 
 		return buffer.toString();
 	}
@@ -114,18 +105,15 @@ public class GamePrinter {
 
 		if(this.game.deadPlayer()) 
 		{
-			buffer.append(NEW_LINE);
-			buffer.append(Messages.ZOMBIES_WIN);
+			buffer.append(NEW_LINE + Messages.ZOMBIES_WIN);
 		}
 		else if(this.game.allZombiesDead()) 
 		{
-			buffer.append(NEW_LINE);
-			buffer.append(Messages.PLAYER_WINS);
+			buffer.append(NEW_LINE + Messages.PLAYER_WINS);
 		}
 		else if(this.game.isPlayerQuits()) 
 		{
-			buffer.append(NEW_LINE);
-			buffer.append(Messages.PLAYER_QUITS);
+			buffer.append(NEW_LINE + Messages.PLAYER_QUITS);
 		}
 		return buffer.toString();
 	}

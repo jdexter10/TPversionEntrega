@@ -21,16 +21,18 @@ public class Peashooter extends Plant {
 	{
 		
 	}
+	
+	//cambiar todos los comentarios del update();
 	@Override
 	public void update() 
 	{
 		boolean found = false;
-		int i = this.col + 1;//Empieza a buscar desde la posición siguiente a la que está la peashooter
+		int i = this.col + 1;//Empieza a buscar desde la posicion siguiente a la que esta la peashooter
 		if(isAlive()) 
 		{  
 			while(!found && i < game.NUM_COLS)//Mientras que no se haya encontrado un zombie al que disparar o mientras que no se hayan revisado todas las columnas de la misma fila
 			{
-				GameItem item = game.getGameItemInPosition(i, row);//Se comprueba si hay un objeto en la posición buscada
+				GameItem item = game.getGameItemInPosition(i, row);//Se comprueba si hay un objeto en la posicion buscada
 			    if(item != null && cooldownCycles >= ATTACK_SPEED)//Si lo hay y la peashooter no está en cooldownCycles le dispara
 			    {  
 			    	found = item.receivePlantAttack(DAMAGE);//Le ataca y si no era un zombie se sigue el bucle
@@ -51,22 +53,21 @@ public class Peashooter extends Plant {
 	@Override
 	public boolean catchObject() 
 	{
-		// TODO Auto-generated method stub
 		return false;
 	}
 	/**
-	 * Devuelve el símbolo del GameObject correspondiente 
+	 * Retorna el SYMBOL del objeto.
 	 * 
-	 * @return <code>Símbolo</code> Símbolo correspondiente al GameObject.
+	 * @return <code>Simbolo</code> Simbolo correspondiente al GameObject.
 	 */
 	@Override
 	protected String getSymbol() {
 		return Messages.PEASHOOTER_SYMBOL;
 	}
 	/**
-	 * Devuelve la descripción del GameObject correspondiente 
+	 * Retorna el DESCRIPTION del objeto.
 	 * 
-	 * @return <code>Descripción</code> Descripción correspondiente al GameObject.
+	 * @return <code>Descripcion</code> Descripcion correspondiente al GameObject.
 	 */
 	@Override
 	public String getDescription() 
@@ -74,7 +75,7 @@ public class Peashooter extends Plant {
 		return Messages.PLANT_DESCRIPTION.formatted(getName(), COST,DAMAGE,ENDURANCE);
 	}
 	/**
-	 * Devuelve el nombre del GameObject correspondiente 
+	 * Retorna del NAME del objeto.
 	 * 
 	 * @return Nombre
 	 */

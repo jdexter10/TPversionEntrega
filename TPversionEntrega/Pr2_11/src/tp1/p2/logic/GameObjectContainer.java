@@ -13,11 +13,7 @@ public class GameObjectContainer {
 		gameObjects = new ArrayList<>();
 	}
 	
-	/**
-	 * Devuelve la lista de los objetos del juego
-	 * 
-	 * @return La lista de objetos
-	 */
+	
 	public List<GameObject> getGameObjects()
 	{
 		return gameObjects;
@@ -65,12 +61,9 @@ public class GameObjectContainer {
 		boolean dead = false;
 		for(int i = 0; i < gameObjects.size();i++) 
 		{
-			//Si un objeto de la lista no esta vivo
 			if(!gameObjects.get(i).isAlive()) 
 			{
-				//Hace que ejecute su accion de morir
 				gameObjects.get(i).onExit();
-				//Lo quita de la lista
 				gameObjects.remove(i);
 				dead = true;
 			}
@@ -79,15 +72,13 @@ public class GameObjectContainer {
 		return dead;
 	}
 	/**
-	 * Devuelve el objeto en la posición introducida
-	 * 
-	 * @param col Posición de la columna introducida.
-	 * @param row Posición de la fila introducida.
-	 * 
-	 * @return El GameObject en la posición. Si no hay devuelve null
+	 * Retorna el objeto de esa posicion.
+	 * @param col columna.
+	 * @param row fila.
+	 * @return = null if no se ha encontrado el objeto.
 	 */
 	
-	//busca si hay un objeto en esa posicion y devuelve el tipo
+	//busca si hay un objeto en esa posicion y devuelve el tipo.
 	public GameObject getObjectInPosition(int col, int row) 
 	{
 		for(GameObject g: gameObjects) 
@@ -98,7 +89,7 @@ public class GameObjectContainer {
 		return null;
 	}
 	/**
-	 * Actualiza todos los objetos de la lista
+	 * Update de todos los objetos existentes.
 	 */
 	public void update() 
 	{
@@ -109,12 +100,10 @@ public class GameObjectContainer {
 		removeDead(); //elimina los objetos ya muertos todavia existentes
 	}
 	/**
-	 * Devuelve el status de los objetos de la lista
-	 * 
-	 * @param col Posición de la columna introducida.
-	 * @param row Posición de la fila introducida.
-	 * 
-	 * @return El status de los objetos en la posición introducida. si no hay devuelve ""
+	 * Retorna STATUS de objeto.
+	 * @param col columna.
+	 * @param row fila.
+	 * @return = "" if no se ha encontrado el objeto en la posicion.
 	 */
 	public String positionToString(int col, int row) 
 	{
@@ -128,7 +117,6 @@ public class GameObjectContainer {
 			{
 				string = g.toString();
 			}
-				
 			else if(g == null) 
 			{
 				string = s.toString();
@@ -160,14 +148,6 @@ public class GameObjectContainer {
 
 		return null;
 	}
-	/**
-	 * Comprueba si hay un sol en la posicion introducida y si es así lo devuelve
-	 * 
-	 * @param col Posicion de la columna introducida.
-	 * @param row Posicion de la fila introducida.
-	 * 
-	 * @return El sol en la posición introducida. Si no hay devuelve null
-	 */
 	public GameItem getSunInPosition(int col, int row) {
 		for(GameObject g: gameObjects) {	
 			if(g.isInPosition(col, row) && !g.receivePlantAttack(0) && !g.receiveZombieAttack(0) ){
@@ -177,15 +157,7 @@ public class GameObjectContainer {
 		}
 		return null;
 	}
-	/**
-	 * Ejecuta la accion de catch de todos los objetos de la lista
-	 * 
-	 * @param col Posicion de la columna introducida.
-	 * @param row Posicion de la fila introducida.
-	 * 
-	  * @return <code>true</code> Si se ha cogido el objeto<code>false</code>
-	 *         otherwise.
-	 */
+	
 	public boolean catchObjects(int col, int row) 
 	{
 		int i = 0;

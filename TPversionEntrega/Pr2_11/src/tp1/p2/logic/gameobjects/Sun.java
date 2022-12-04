@@ -52,10 +52,11 @@ public class Sun extends GameObject{
 	@Override
 	public boolean catchObject() {
 		if(!isAlive())
+		{
 			return false;
-		
-		game.addCatchedSuns(SUN_VALUE);//Añade el sol cogido al game
-		this.lives = 0;//El sol desaparece ya que ha sido cogido
+		}
+		game.addCatchedSuns(SUN_VALUE);
+		this.lives = 0;
 		return true;
 
 	}

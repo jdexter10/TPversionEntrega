@@ -26,25 +26,25 @@ public class SunsManager {
 		this.generatedSuns = 0;
 	}
 	/**
-	 * Devuelve los soles recogidos durante el juego
+	 * Retorna los suns Catched.
 	 * 
-	 * @return los soles recogidos durante el juego 
+	 * @return Soles recogidos en game 
 	 */
 	public int getCatchedSuns() {
 		return this.catchedSuns;
 	}
 	/**
-	 * Devuelve los soles generados durante el juego
+	 * Retorna los suns generated.
 	 * 
-	 * @return los soles generados durante el juego 
+	 * @return Soles generados en game
 	 */
 	public int getGeneratedSuns() {
 		return this.generatedSuns;
 	}
 	/**
-	 * Cambia el valor de los soles cogidos durante el juego
+	 * Actualiza el valor de suns sumado a los recogidos.
 	 * 
-	 * @param suns Soles a sumar
+	 * @param suns += soles cogidos
 	 * 
 	 */
 	public void setCatchedSuns(int suns) 
@@ -52,9 +52,9 @@ public class SunsManager {
 		this.catchedSuns += suns;
 	}
 	/**
-	 * Cambia el valor de los soles generados durante el juego
+	 *Actualiza el valor de suns sumado a los generados.
 	 * 
-	 * @param suns Soles a sumar
+	 * @param suns += soles generados
 	 * 
 	 */
 	public void setGeneratedSuns(int suns) 
@@ -62,7 +62,7 @@ public class SunsManager {
 		this.generatedSuns += suns;
 	}
 	/**
-	 * Añade un nuevo sol al juego si la aparición de soles aleatorios no está en cooldown
+	 * A�ade un nuevo sol al juego si la aparición de soles aleatorios no está en cooldown
 	 * 
 	 */
 	public void update() {

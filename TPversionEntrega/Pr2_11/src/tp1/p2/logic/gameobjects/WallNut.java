@@ -21,7 +21,6 @@ public class WallNut extends Plant {
 	}
 	@Override
 	public boolean catchObject() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 	@Override
@@ -29,35 +28,35 @@ public class WallNut extends Plant {
 		return COST;
 	}
 	/**
-	 * Devuelve el nombre del GameObject correspondiente 
+	 * Retorna el NAME del objeto
 	 * 
-	 * @return Nombre
+	 * @return NAME
 	 */
 	@Override
 	public String getName() {
 		return Messages.WALL_NUT_NAME;
 	}
 	/**
-	 * Devuelve el símbolo del GameObject correspondiente 
+	 * Retorna el SIMBOL del objeto
 	 * 
-	 * @return <code>Símbolo</code> Símbolo correspondiente al GameObject.
+	 * @return SYMBOL
 	 */
 	@Override
 	protected String getSymbol() {
 		return Messages.WALL_NUT_SYMBOL;
 	}
 	/**
-	 * Devuelve la descripción del GameObject correspondiente 
+	 * Retorna la DESCRIPTION del objeto
 	 * 
-	 * @return <code>Descripción</code> Descripción correspondiente al GameObject.
+	 * @return DESCRIPTION
 	 */
 	@Override
 	public String getDescription() {
 		return Messages.PLANT_DESCRIPTION.formatted(getName(), COST,DAMAGE,ENDURANCE);
 	}
 	@Override
-	public void update() {
-		// TODO Auto-generated method stub
+	public void update() 
+	{
 		
 	}
 }
