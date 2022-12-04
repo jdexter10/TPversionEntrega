@@ -55,17 +55,11 @@ public enum Level {
 		}
 		return buffer.toString();
 	}
-	/**
-	 * Devuelve el numero de zombies que aparecen dependiendo del nivel
-	 * @return Numero de zombies que aparecen.
-	 */
+	
 	public int getNumberOfZombies() {
 		return this.numberOfZombies; 
 	}
-	/**
-	 * Devuelve la frecuencia con la que los zombies aparecen dependiendo del nivel
-	 * @return  Frecuencia con la que los zombies que aparecen.
-	 */
+	
 	public double getZombieFrequency() {
 		return this.zombieFrequency;
 	}

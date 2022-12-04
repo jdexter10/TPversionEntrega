@@ -10,42 +10,22 @@ public class NoneCommand extends Command {
 	public NoneCommand() {
 
 	}
-	/**
-	 * Recibe el nombre del comando
-	 * 
-	 * 
-	 * @return Un String con el nombre del comando
-	 */
+	
 	@Override
 	protected String getName() {
 		return Messages.COMMAND_NONE_NAME;
 	}
-	/**
-	 * Recibe el shortCut del comando
-	 * 
-	 * 
-	 * @return Un String con el shortCut del comando
-	 */
+	
 	@Override
 	protected String getShortcut() {
 		return Messages.COMMAND_NONE_SHORTCUT;
 	}
-	/**
-	 * Recibe los detalles del comando
-	 * 
-	 * 
-	 * @return Un String con los detalles del comando
-	 */
+	
 	@Override
 	public String getDetails() {
 		return Messages.COMMAND_NONE_DETAILS;
 	}
-	/**
-	 * Recibe la información del comando
-	 * 
-	 * 
-	 * @return Un String con la información del comando
-	 */
+	
 	@Override
 	public String getHelp() {
 		return Messages.COMMAND_NONE_HELP;

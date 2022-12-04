@@ -9,42 +9,22 @@ import tp1.p2.view.Messages;
 
 public class ListPlantsCommand extends Command {
 
-	/**
-	 * Recibe el nombre del comando
-	 * 
-	 * 
-	 * @return Un String con el nombre del comando
-	 */
+	
 	@Override
 	protected String getName() {
 		return Messages.COMMAND_LIST_NAME;
 	}
-	/**
-	 * Recibe el shortCut del comando
-	 * 
-	 * 
-	 * @return Un String con el shortCut del comando
-	 */
+	
 	@Override
 	protected String getShortcut() {
 		return Messages.COMMAND_LIST_SHORTCUT;
 	}
-	/**
-	 * Recibe los detalles del comando
-	 * 
-	 * 
-	 * @return Un String con los detalles del comando
-	 */
+	
 	@Override
 	public String getDetails() {
 		return Messages.COMMAND_LIST_DETAILS;
 	}
-	/**
-	 * Recibe la información del comando
-	 * 
-	 * 
-	 * @return Un String con la información del comando
-	 */
+	
 	@Override
 	public String getHelp() {
 		return Messages.COMMAND_LIST_HELP;

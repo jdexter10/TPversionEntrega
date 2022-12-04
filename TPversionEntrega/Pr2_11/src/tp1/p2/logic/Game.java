@@ -67,7 +67,7 @@ public class Game implements GameStatus, GameWorld{
 	}
 
 	/**
-	 * Actualiza el juego, actualizando todos los objetos y datos del juego
+	 * Update general, contiene el de los objetos, listas etc..
 	 */
 	public void update() {
 
@@ -101,15 +101,11 @@ public class Game implements GameStatus, GameWorld{
 	public void inicializar() {
 		zombiesManager = new ZombiesManager(this,level,rand);
 		container = new GameObjectContainer();
-		actions = new ArrayDeque<>();
 		sunsManager = new SunsManager(this,rand);
+		actions = new ArrayDeque<>();
 	}
 	
-	/**
-	 * Añade una accion que se ha llevado a cabo por un objeto del juego
-	 * 
-	 * @param gameAction Accion a a�adir.
-	 */
+	
 	public void pushAction(GameAction gameAction) {
 	    this.actions.addLast(gameAction);
 	}
@@ -124,14 +120,7 @@ public class Game implements GameStatus, GameWorld{
 	private boolean areTherePendingActions() {
 	    return this.actions.size() > 0;
 	}
-	/**
-	 * Ejecuta el comando introducido.
-	 * 
-	 * @param command Comando a ejecutar.
-	 * 
-	 * @return <code>true</code> Si se debe imprimir el juego, <code>false</code>
-	 *         otherwise.
-	 */
+	
 	@Override
 	public boolean execute(Command command) 
 	{
@@ -153,61 +142,30 @@ public class Game implements GameStatus, GameWorld{
 	{
 		return container.positionToString(col,row);
 	}
-	/**
-	 * Comprueba si la posición introducida está libre.
-	 * 
-	 * @param col Posición de la columna a revisar.
-	 * @param row Posición de la fila a revisar.
-	 * 
-	 * @return <code>true</code> Si la posición está libre, <code>false</code>
-	 *         otherwise.
-	 */
+	
 	@Override
 	public boolean isPositionEmpty(int col, int row) 
 	{
 		return container.isPositionEmpty(col, row);
 	}
-	/**
-	 * Intenta coger un objeto del juego.
-	 * 
-	 * @param col Posicion de la columna del objeto
-	 * @param row Posicion de la fila del objeto
-	 * 
-	 * @return <code>true</code> Si se ha encontrado el objeto, <code>false</code>
-	 *         otherwise.
-	 */
+	
 	@Override
 	public boolean tryToCatchObject(int col, int row) {
 		
 		return container.catchObjects(col, row);
 	}
-	/**
-	 * Añade un item al contenedor.
-	 * 
-	 * @param item Item para añadir.
-	 * 
-	 * @return <code>true</code> si se ha podido añadir, <code>false</code>
-	 *         otherwise.
-	 */
+	
 	@Override
 	public boolean addItem(GameObject item) {
 		container.add(item);
 		return true;
 	}
-	/**
-	 * Devuelve el item en la posicion introducida.
-	 * 
-	 * @param col Posición de la columna del objeto
-	 * @param row Posición de la fila del objeto.
-	 * 
-	 * @return <code>GameItem</code> Si hay un item en esa posición, <code>null</code>
-	 *         otherwise.
-	 */
+	
 	@Override
 	public GameItem getGameItemInPosition(int col, int row) 
 	{
-		GameItem aux = container.getGameItemInPosition(col, row); ;
-		return aux;
+		GameItem item = container.getGameItemInPosition(col, row); ;
+		return item;
 	}
 	/**
 	 * Get available suncoins.
@@ -248,10 +206,7 @@ public class Game implements GameStatus, GameWorld{
 	{
 		return this.playerQuits;
 	}
-	/**
-	 * Ejecuta la acción exit, saliendo del juego.
-	 * 
-	 */
+	
 	@Override
 	public void playerQuits() 
 	{
@@ -278,11 +233,7 @@ public class Game implements GameStatus, GameWorld{
 	{
 		return zombiesManager.getRemainingZombies();
 	}
-	/**
-	 * Comprueba si todos los zombies han muerto
-	 * 
-	 * @return {@code true} Si todos los zombies han muerto {@code false} otherwise.
-	 */
+	
 	@Override
 	public boolean allZombiesDead() 
 	{
@@ -292,26 +243,18 @@ public class Game implements GameStatus, GameWorld{
 		}
 		return false;
 	}
-	/**
-	 * Comprueba si el jugador ha muerto
-	 * 
-	 * @return {@code true} Si los zombies han llegado al final {@code false} otherwise.
-	 */
+	
 	@Override
 	public boolean deadPlayer() 
 	{
-		for(GameObject o: container.getGameObjects()) 
+		for(GameObject g: container.getGameObjects()) 
 		{
-			if(o.getCol()== -1)
+			if(g.getCol()== -1)
 				return true;
 		}
 		return false;
 	}
-	/**
-	 * Comprueba si el juego se ha terminado
-	 * 
-	 * @return {@code true} Si el jeugo se ha terminado{@code false} otherwise.
-	 */
+	
 	@Override
 	public boolean isFinished() 
 	{
@@ -322,23 +265,14 @@ public class Game implements GameStatus, GameWorld{
 		}
 		return finished;
 	}
-	/**
-	 * Añade un sol al juego
-	 */
+	
 	@Override
 	public void addSun() {
 		
 		sunsManager.addSun();
 		
 	}
-	/**
-	 * Comprueba si se puede introducir un GameObject. Si es así lo añade al contenedor.
-	 * 
-	 * @param gameObject Objeto del juego a introducir
-	 * 
-	 * @return <code>true</code> Si se ha podido introducir, <code>false</code>
-	 *         otherwise.
-	 */
+	
 	@Override
 	public boolean addNpc(GameObject gameObject) 
 	{
@@ -352,48 +286,29 @@ public class Game implements GameStatus, GameWorld{
 		return false;
 		
 	}
-	/**
-	 * Comprueba si el precio de la planta a añadir es menor que el numero de monedas que hay en el juego. 
-	 * 
-	 * @param cost Coste de la planta que se quiere introducir
-	 * 
-	 * @return <code>true</code> Si se ha podido comprar <code>false</code>
-	 *         otherwise.
-	 */
+	
 	@Override
 	public boolean tryToBuy(int cost) {
-		if(cost > suncoins)
-			return false;
-		else 
+		boolean ok = false;
+		if(cost <= suncoins)
+		{
 			suncoins -= cost;
-		return true;
+			ok = true;
+		}
+		return ok;
 	}
-	/**
-	 * Informa de que un zombie ha muerto al zombiesManager
-	 */
+	
 	@Override
 	public void zombieDied() {
 		zombiesManager.zombieDied();
 		
 	}
-	/**
-	 * Devuelve el GameObject en la posición introducida
-	 * 
-	 * @param col Posición de la columna introducida.
-	 * @param row Posición de la fila introducida.
-	 * 
-	 * @return <code>GameObject</code> Si hay un objeto en la posición introducida<code>null</code>
-	 *         otherwise.
-	 */
+	
 	@Override
 	public GameObject getObjectInPosition(int col, int row) {
 		return container.getObjectInPosition(col, row);
 	}
-	/**
-	 * Informa e introduce los soles que se han cogido al sunsManager.
-	 * 
-	 * @param sunValue Número de soles a introducir.
-	 */
+	
 	public void addCatchedSuns(int value) 
 	{
 		this.suncoins += value;
