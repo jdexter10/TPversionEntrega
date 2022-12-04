@@ -50,13 +50,13 @@ public interface GameStatus {
 	 */
 	int getCaughtSuns();
 
-	boolean isPlayerQuits(); // comprueba si el juagdor ha decidido salir del game
+	boolean isPlayerQuits(); 
 	
-	boolean allZombiesDead(); // comprueba si han muerto todos los zombies
+	boolean allZombiesDead(); 
 	
-	boolean deadPlayer(); //comprueba si el jugador ha muerto, es decir si el zombie ha cruzado
+	boolean deadPlayer(); 
 	
-	boolean isFinished(); // comprueba si ha terminado el game de cualquier manera
+	boolean isFinished();
 
 
 }

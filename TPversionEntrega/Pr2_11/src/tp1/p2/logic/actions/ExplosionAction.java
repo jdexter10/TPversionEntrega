@@ -19,16 +19,10 @@ public class ExplosionAction implements GameAction {
 		this.damage = damage;
 		this.attackZombies = attackZombies;
 	}
-	/**
-	 * Ejecuta la acción de explotar. Hace daño a sus respectivos enemigos en las posiciones cercanas al que ejecuta la acción
-	 * 
-	 * @param game Game donde se está ejecutando el juego 
-	 * 
-	 */
+	
 	@Override
 	public void execute(GameWorld game) {
 		GameItem item;
-		//Posiciones afectadas de arriba
 		for(int i = col - 1; i <= col + 1;i++)
 		{
 			item = game.getGameItemInPosition(i, row - 1);
@@ -44,10 +38,8 @@ public class ExplosionAction implements GameAction {
 		    	}
 		    }
 		}
-		//Posiciones afectafas a la izquierda y a la derecha
 		for(int i = row; i <= row + 1; ++i)
 		{
-			//Linea de la izquierda
 			item = game.getGameItemInPosition(col - 1, i);
 		    if(item != null) {  
 		    	if(attackZombies)
@@ -59,7 +51,6 @@ public class ExplosionAction implements GameAction {
 		    		item.receiveZombieAttack(damage);
 		    	}	
 		    }
-		  //Linea de la derecha
 		    item = game.getGameItemInPosition(col + 1,  i);
 		    if(item != null) 
 		    {
@@ -74,14 +65,17 @@ public class ExplosionAction implements GameAction {
 		    }
 		    
 		}
-		//Posicion por debajo de la explosion
 		item = game.getGameItemInPosition(col, row + 1);
 		if(item != null) 
 	    {
 			if(attackZombies)
-	    		item.receivePlantAttack(damage);
+			{
+				item.receivePlantAttack(damage);
+			}
 	    	else
+	    	{
 	    		item.receiveZombieAttack(damage);
+	    	}
 	    }
 	}
 

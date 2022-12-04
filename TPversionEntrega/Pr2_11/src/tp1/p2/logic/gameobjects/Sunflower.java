@@ -28,8 +28,8 @@ public class Sunflower extends Plant {
 	{
 		if(cooldownCycles == GENERATE_SUNS && isAlive())//Si está viva y no está en cooldownCycles
 		{
-			game.addSun();//Añade un sol al juego
-			cooldownCycles = 0;//Se resetea el cooldownCycles
+			game.addSun();
+			cooldownCycles = 0;
 		}
 		cooldownCycles++;
 	}
@@ -37,31 +37,23 @@ public class Sunflower extends Plant {
 	@Override
 	public boolean catchObject() 
 	{
-		return false;
+		boolean ok = false;
+		return ok;
 	}
-	/**
-	 * Devuelve el símbolo del GameObject correspondiente 
-	 * 
-	 * @return <code>Símbolo</code> Símbolo correspondiente al GameObject.
-	 */
+	
 	@Override
 	protected String getSymbol() {
 		return Messages.SUNFLOWER_SYMBOL;
 	}
-	/**
-	 * Devuelve la descripción del GameObject correspondiente 
-	 * 
-	 * @return <code>Descripción</code> Descripción correspondiente al GameObject.
-	 */
+	
 	@Override
 	public String getDescription() 
 	{
 		return Messages.PLANT_DESCRIPTION.formatted(getName(), COST,DAMAGE,ENDURANCE);
 	}
 	/**
-	 * Devuelve el nombre del GameObject correspondiente 
-	 * 
-	 * @return Nombre
+	 * Retorna NAME del objeto
+	 * @return NAME
 	 */
 	@Override
 	public String getName() 

@@ -27,24 +27,24 @@ public class PlantFactory {
 	}
 
 	public static Plant spawnPlant(String plantName, GameWorld game, int col, int row) {
-		Plant aux = null;
-		switch(plantName)//Creará una planta dependiendo del nombre introducido por consola 
+		Plant plant = null;
+		if(plantName == "s")
 		{
-		case "s":
-			aux = new Sunflower(game,col,row);//Añade un girasol
-		break;
-		case "p":
-			aux = new Peashooter(game,col,row);//Añade un Lanza guisantes
-		break;
-		case "c":
-			aux = new CherryBomb(game,col,row);//Añade una cereza
-		break;
-		case "w":
-			aux = new WallNut(game,col,row);//Añade una nuez
-			break;
+			plant = new Sunflower(game,col,row);
 		}
-		return aux;	
-		//cambiar case por if
+		else if(plantName == "p")
+		{
+			plant = new Peashooter(game,col,row);
+		}
+		else if(plantName == "c")
+		{
+			plant = new CherryBomb(game,col,row);
+		}
+		else if(plantName == "w")
+		{
+			plant = new WallNut(game,col,row);
+		}
+		return plant;	
 	}
 
 	public static List<Plant> getAvailablePlants() {

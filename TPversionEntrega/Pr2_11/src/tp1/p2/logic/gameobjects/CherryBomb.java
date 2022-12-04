@@ -32,19 +32,15 @@ public class CherryBomb extends Plant {
 		return COST;
 	}
 	/**
-	 * Devuelve el nombre del GameObject correspondiente 
+	 * Retorna el NAME del objeto
 	 * 
-	 * @return Nombre
+	 * @return NAME
 	 */
 	@Override
 	public String getName() {
 		return Messages.CHERRY_BOMB_NAME;
 	}
-	/**
-	 * Devuelve el símbolo del GameObject correspondiente 
-	 * 
-	 * @return <code>Símbolo</code> Símbolo correspondiente al GameObject.
-	 */
+	
 	@Override
 	protected String getSymbol() {
 		if(cooldownCycles != 2) 
@@ -54,11 +50,7 @@ public class CherryBomb extends Plant {
 			return "C";
 		
 	}
-	/**
-	 * Devuelve la descripción del GameObject correspondiente 
-	 * 
-	 * @return <code>Descripción</code> Descripción correspondiente al GameObject.
-	 */
+	
 	@Override
 	public String getDescription() {
 		return Messages.PLANT_DESCRIPTION.formatted(getName(), COST,DAMAGE,ENDURANCE);
@@ -69,10 +61,8 @@ public class CherryBomb extends Plant {
 		boolean carryAction = cooldownCycles == ACTION_DELAY;
 		GameItem item;
 		if(isAlive() && carryAction) {
-			//Se ejecuta la acción de explotar
 			delayedAction();
 			
-			//La cereza muere una vez explota
 			lives = 0;
 	    }
 		else 
@@ -84,9 +74,7 @@ public class CherryBomb extends Plant {
 	@Override
 	public void delayedAction() 
 	{
-		//Crea una ExplosionAction que afecta a las plantas
 		ExplosionAction explosionAction = new ExplosionAction(col,row,DAMAGE,true);
-		//La añade al array de acciones
 		game.pushAction(explosionAction);
 	}
 }

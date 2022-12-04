@@ -61,10 +61,7 @@ public class SunsManager {
 	{
 		this.generatedSuns += suns;
 	}
-	/**
-	 * A�ade un nuevo sol al juego si la aparición de soles aleatorios no está en cooldown
-	 * 
-	 */
+	
 	public void update() {
 		if (cooldown == 0) 
 		{
@@ -76,19 +73,11 @@ public class SunsManager {
 			cooldown--;
 		}
 	}
-	/**
-	 * Devuelve un número aleatorio
-	 * 
-	 * @param bound nextInt
-	 * 
-	 * @return Un número random
-	 */
+	
 	private int getRandomInt(int bound) {
 		return this.rand.nextInt(bound);
 	}
-	/**
-	 * Añade un nuevo sol al juego
-	 */
+	
 	public void addSun() {
 		int col = getRandomInt(GameWorld.NUM_COLS);
 		int row = getRandomInt(GameWorld.NUM_ROWS);
