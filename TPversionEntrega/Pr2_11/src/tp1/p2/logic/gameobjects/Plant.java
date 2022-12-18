@@ -2,6 +2,7 @@ package tp1.p2.logic.gameobjects;
 
 import tp1.p2.logic.GameWorld;
 import tp1.p2.view.Messages;
+import tp1.p2.logic.gameobjects.Plant;
 
 public abstract class Plant extends GameObject{
 	
@@ -63,6 +64,14 @@ public abstract class Plant extends GameObject{
 	{
 		
 	}
+	
+	@Override
+	public boolean fillsPosition() 
+	{
+		return true;
+	}
+	
+	public abstract Plant copy(GameWorld game, int col, int row);
 }
 	
 	

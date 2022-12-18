@@ -18,6 +18,9 @@ import tp1.p2.control.commands.NoneCommand;
 import tp1.p2.control.commands.ResetCommand;
 import tp1.p2.logic.GameWorld;
 import tp1.p2.view.Messages;
+import tp1.p2.control.Command;
+import tp1.p2.control.exceptions.CommandParseException;
+import tp1.p2.control.exceptions.GameException;
 
 /**
  * Represents a user action in the game.
@@ -87,11 +90,14 @@ public abstract class Command {
 	 * 
 	 * @return {@code true} if game board must be printed {@code false} otherwise.
 	 */
-	public abstract ExecutionResult execute(GameWorld game);
+	public abstract boolean execute(GameWorld game) throws GameException;
 	
-	public Command create(String[] parameters) {
-		return this;
-	}
+	public Command create(String[] parameters) throws GameException {
+		  if (parameters.length == 0) {
+		    throw new CommandParseException(Messages.COMMAND_INCORRECT_PARAMETER_NUMBER);
+		  }
+		  return this;
+		}
 	
 	public static void newCycle() {
 		for(Command c : AVAILABLE_COMMANDS) {

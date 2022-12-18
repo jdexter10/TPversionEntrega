@@ -4,6 +4,7 @@ import tp1.p2.control.Command;
 import tp1.p2.control.ExecutionResult;
 import tp1.p2.logic.GameWorld;
 import tp1.p2.view.Messages;
+import tp1.p2.control.exceptions.GameException;
 
 public class NoneCommand extends Command {
 
@@ -38,9 +39,9 @@ public class NoneCommand extends Command {
 	 * @return {@code true} if game board must be printed {@code false} otherwise.
 	 */
 	@Override
-	public ExecutionResult execute(GameWorld game) {
-		ExecutionResult none = new ExecutionResult(true);
-		return none;
+	public boolean execute(GameWorld game)throws GameException {
+		game.update();
+		return true;
 	}
 
 }

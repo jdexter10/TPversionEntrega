@@ -8,6 +8,7 @@ import tp1.p2.logic.gameobjects.PlantFactory;
 import tp1.p2.logic.gameobjects.Zombie;
 import tp1.p2.logic.gameobjects.ZombieFactory;
 import tp1.p2.view.Messages;
+import tp1.p2.control.exceptions.GameException;
 
 public class ListZombiesCommand extends Command {
 
@@ -33,14 +34,14 @@ public class ListZombiesCommand extends Command {
 	}
 	
 	@Override
-	public ExecutionResult execute(GameWorld game) {
+	public boolean execute(GameWorld game)throws GameException {
 		System.out.println(Messages.AVAILABLE_ZOMBIES);
 		for(Zombie z: ZombieFactory.getAvailableZombies()) 
 		{
 			System.out.println(z.getDescription());
 		}
 		System.out.println();
-		return new ExecutionResult(false);
+		return false;
 	}
 
 }

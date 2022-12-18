@@ -3,6 +3,8 @@ package tp1.p2.logic.gameobjects;
 import tp1.p2.logic.GameItem;
 import tp1.p2.logic.GameWorld;
 import tp1.p2.view.Messages;
+import tp1.p2.logic.gameobjects.Peashooter;
+import tp1.p2.logic.gameobjects.Plant;
 
 public class Peashooter extends Plant {
 	
@@ -88,7 +90,13 @@ public class Peashooter extends Plant {
 	public int getCost() {
 		return COST;
 	}
-	
+	@Override
+	public Plant copy(GameWorld game, int col, int row) {
+		
+		Plant plant= new Peashooter(game, col, row);
+		
+		return plant;
+	}
 
 	
 	

@@ -2,9 +2,22 @@ package tp1.p2.view;
 
 import static tp1.utils.StringUtils.*;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.InputMismatchException;
+import java.util.Locale;
+import java.util.Scanner;
 
 import tp1.p2.logic.GameStatus;
 import tp1.p2.logic.GameWorld;
+import tp1.p2.control.exceptions.RecordException;
+import tp1.p2.view.Messages;
 import tp1.utils.StringUtils;
 
 public class GamePrinter {
@@ -117,4 +130,79 @@ public class GamePrinter {
 		}
 		return buffer.toString();
 	}
+
+
+public String setRecord() throws RecordException, IOException 
+	{
+		StringBuilder buffer = new StringBuilder("");
+		Scanner scanner = null; 
+		String levelName;
+		String tmpName = "temporal.txt";
+	
+		int record = 0;
+	
+		boolean bigger = false;
+		boolean writeNewRecord = false;
+	
+			try {
+				File newFile = new File(tmpName);
+				FileWriter fileWriter= new FileWriter(newFile, false);
+				BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+				PrintWriter printWriter = new PrintWriter(bufferedWriter);
+				File actualFile = new File(Messages.RECORD_FILENAME);
+		
+				scanner = new Scanner(new BufferedReader(new FileReader(Messages.RECORD_FILENAME)));
+				scanner.useLocale(Locale.US);
+				while (scanner.hasNext()) 
+				{
+					levelName = scanner.next();
+				record = scanner.nextInt();
+				if (levelName.equals(game.getLevelName()))
+				{
+					if(game.getScore() > record) 
+					{
+						bigger = true;
+						writeNewRecord = true;
+					}
+				}
+			
+				printWriter.print(levelName + SPACE);
+			
+				if(writeNewRecord) 
+				{
+					printWriter.println(game.getScore());
+					writeNewRecord = false;
+				}
+				else 
+					printWriter.println(record);
+				}
+				scanner.close();
+				printWriter.flush();
+				printWriter.close();
+				actualFile.delete();
+				File dump = new File(Messages.RECORD_FILENAME);
+				newFile.renameTo(dump);
+
+			} catch (InputMismatchException ime) 
+			{
+				throw new RecordException(Messages.RECORD_READ_ERROR + " or " + Messages.RECORD_WRITE_ERROR);
+			} catch (FileNotFoundException e) {
+				throw new RecordException(Messages.RECORD_READ_ERROR + " or " + Messages.RECORD_WRITE_ERROR);
+			}
+			catch(IOException  ioe) 
+			{
+				throw new RecordException(Messages.RECORD_READ_ERROR + " or " + Messages.RECORD_WRITE_ERROR);
+			}
+			if(bigger) 
+			{
+		
+				buffer.append(Messages.NEW_RECORD);
+				buffer.append(game.getLevelName());
+				buffer.append(SPACE);
+				buffer.append(game.getScore());
+			}
+	
+			return buffer.toString();
+	}
 }
+

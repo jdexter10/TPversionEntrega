@@ -133,5 +133,6 @@ public abstract class GameObject implements GameItem {
 	{
 		
 	}
+	abstract public boolean fillsPosition();
 	
 }

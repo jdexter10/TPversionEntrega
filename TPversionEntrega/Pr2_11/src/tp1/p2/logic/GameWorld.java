@@ -6,6 +6,7 @@ import tp1.p2.control.Level;
 import tp1.p2.logic.actions.GameAction;
 import tp1.p2.logic.gameobjects.GameObject;
 import tp1.p2.logic.gameobjects.Zombie;
+import tp1.p2.control.exceptions.GameException;
 
 public interface GameWorld {
 	
@@ -28,7 +29,7 @@ public interface GameWorld {
 	
 	void update();
 	
-	public boolean execute(Command command);
+	public boolean execute(Command command)throws GameException ;
 	
 	GameItem getGameItemInPosition(int col, int row);
 	
@@ -49,4 +50,8 @@ public interface GameWorld {
 	GameObject getObjectInPosition(int col, int row);
 	
 	void addCatchedSuns(int sunValue);
+	
+	void setScore(int points);
+	
+	public String getLevelName();
 }

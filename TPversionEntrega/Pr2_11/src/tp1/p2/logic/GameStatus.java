@@ -57,6 +57,8 @@ public interface GameStatus {
 	boolean deadPlayer(); 
 	
 	boolean isFinished();
-
-
+	
+	public int getScore();
+	
+	public String getLevelName();
 }

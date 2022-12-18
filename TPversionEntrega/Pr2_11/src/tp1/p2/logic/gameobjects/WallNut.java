@@ -2,6 +2,8 @@ package tp1.p2.logic.gameobjects;
 
 import tp1.p2.logic.GameWorld;
 import tp1.p2.view.Messages;
+import tp1.p2.logic.gameobjects.Plant;
+import tp1.p2.logic.gameobjects.WallNut;
 
 public class WallNut extends Plant {
 	
@@ -58,5 +60,10 @@ public class WallNut extends Plant {
 	public void update() 
 	{
 		
+	}
+	@Override
+	public Plant copy(GameWorld game, int col, int row) {
+		Plant plant= new WallNut(game, col, row);
+		return plant;
 	}
 }

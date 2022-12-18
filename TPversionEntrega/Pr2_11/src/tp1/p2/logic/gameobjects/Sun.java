@@ -88,5 +88,10 @@ public class Sun extends GameObject{
 	public void onExit() {
 		
 	}
+
+	@Override
+	public boolean fillsPosition() {
+		return false;
+	}
 	
 }

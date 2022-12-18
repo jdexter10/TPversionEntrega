@@ -11,6 +11,8 @@ import tp1.p2.logic.gameobjects.PlantFactory;
 import tp1.p2.logic.gameobjects.Zombie;
 import tp1.p2.logic.gameobjects.ZombieFactory;
 import tp1.p2.view.Messages;
+import tp1.p2.control.exceptions.GameException;
+import tp1.p2.control.exceptions.InvalidPositionException;
 
 public class AddZombieCommand extends Command {
 
@@ -51,22 +53,21 @@ public class AddZombieCommand extends Command {
 	}
 	
 	@Override
-	public ExecutionResult execute(GameWorld game) {
+	public boolean execute(GameWorld game) throws GameException {
 		GameItem item = game.getGameItemInPosition(col , row);
 		
-		if(this.zombieIdx < 0 || this.zombieIdx >=  ZombieFactory.getAvailableZombies().size()||this.col >= game.NUM_COLS || this.row >= game.NUM_ROWS || this.col < 0 || this.row < 0) 
+		//Si hay un zombie o una planta en la posición introducida
+		if(!game.isPositionEmpty(this.col,row) && (item.receivePlantAttack(0) || item.receiveZombieAttack(0))) 
 		{
-			return new ExecutionResult(Messages.COMMAND_INCORRECT_PARAMETER_NUMBER);
+			throw new InvalidPositionException(Messages.INVALID_POSITION);
 		}
-		
-		else if(!game.isPositionEmpty(this.col,row) && (item.receivePlantAttack(0) || item.receiveZombieAttack(0))) 
-		{
-			return new ExecutionResult(Messages.INVALID_POSITION);
-		}
+		//Crea el zombie con los valores introducidos
 
 		Zombie zombie = ZombieFactory.spawnZombie(this.zombieIdx, game, this.col, this.row);
+		//Añade el zombie
 		game.addNpc(zombie);
-		return new ExecutionResult(true);
+		game.update();
+		return true;
 	}
 	
 	@Override

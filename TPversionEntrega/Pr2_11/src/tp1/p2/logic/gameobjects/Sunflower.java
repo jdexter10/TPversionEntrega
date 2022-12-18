@@ -3,13 +3,14 @@ package tp1.p2.logic.gameobjects;
 import tp1.p2.logic.GameItem;
 import tp1.p2.logic.GameWorld;
 import tp1.p2.view.Messages;
+import tp1.p2.logic.gameobjects.Plant;
+import tp1.p2.logic.gameobjects.Sunflower;
 
 public class Sunflower extends Plant {
 	
-	private static final int ADD_SUNS = 10;
 	private static final int COST = 10;
 	private static final int DAMAGE= 0;
-	private static final int ENDURANCE = 3;
+	private static final int ENDURANCE = 1;
 	private static final int GENERATE_SUNS = 3;
 	
 	public Sunflower(GameWorld game, int col, int row) 
@@ -64,6 +65,13 @@ public class Sunflower extends Plant {
 	@Override
 	public int getCost() {
 		return COST;
+	}
+
+	@Override
+	public Plant copy(GameWorld game, int col, int row) {
+		Plant plant= new Sunflower(game, col, row);
+		
+		return plant;
 	}
 
 }

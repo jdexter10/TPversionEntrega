@@ -135,5 +135,9 @@ public class Zombie extends GameObject {
 	{
 		return ENDURANCE;
 	}
+	@Override
+	public boolean fillsPosition() {
+		return true;
+	}
 }
 

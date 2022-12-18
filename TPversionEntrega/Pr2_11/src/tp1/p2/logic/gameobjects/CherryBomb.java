@@ -4,6 +4,8 @@ import tp1.p2.logic.GameItem;
 import tp1.p2.logic.GameWorld;
 import tp1.p2.logic.actions.ExplosionAction;
 import tp1.p2.view.Messages;
+import tp1.p2.logic.gameobjects.CherryBomb;
+import tp1.p2.logic.gameobjects.Plant;
 
 public class CherryBomb extends Plant {
 	
@@ -76,5 +78,10 @@ public class CherryBomb extends Plant {
 	{
 		ExplosionAction explosionAction = new ExplosionAction(col,row,DAMAGE,true);
 		game.pushAction(explosionAction);
+	}
+	@Override
+	public Plant copy(GameWorld game, int col, int row) {
+		Plant plant= new CherryBomb(game, col, row);
+		return plant;
 	}
 }

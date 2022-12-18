@@ -7,6 +7,8 @@ import tp1.p2.control.ExecutionResult;
 import tp1.p2.logic.GameItem;
 import tp1.p2.logic.GameWorld;
 import tp1.p2.view.Messages;
+import tp1.p2.control.exceptions.CommandExecuteException;
+import tp1.p2.control.exceptions.GameException;
 
 public class CatchCommand extends Command {
 
@@ -53,27 +55,24 @@ public class CatchCommand extends Command {
 	
 	 
 	@Override
-	public ExecutionResult execute(GameWorld game) {
+	public boolean execute(GameWorld game) throws GameException{
 		GameItem item = game.getGameItemInPosition(col , row);
-		if(this.col >= GameWorld.NUM_COLS || this.row >= GameWorld.NUM_ROWS || this.col < 0 || this.row < 0) 
-		{
-			return new ExecutionResult(Messages.COMMAND_INCORRECT_PARAMETER_NUMBER);
-		}
+		
 		//Si la posición está vacía o no es una planta
 		if((game.isPositionEmpty(this.col,row)) || (!game.isPositionEmpty(this.col,row) && (item.receivePlantAttack(0) || item.receiveZombieAttack(0))) ) 
 		{
-			return new ExecutionResult(Messages.NO_CATCHABLE_IN_POSITION.formatted(this.col,this.row));
+			throw new CommandExecuteException(Messages.NO_CATCHABLE_IN_POSITION.formatted(this.col,this.row));
 		}
 		//Comprueba si ya se ha cogido un sol en el ciclo
 		if(caughtSunThisCycle) 
 		{
-			return new ExecutionResult(Messages.SUN_ALREADY_CAUGHT);
+			throw new CommandExecuteException(Messages.SUN_ALREADY_CAUGHT);
 		}
 		
 		caughtSunThisCycle = game.tryToCatchObject(col, row);
 		
 		
-		return new ExecutionResult(false);
+		return true;
 	}
 	
 	@Override

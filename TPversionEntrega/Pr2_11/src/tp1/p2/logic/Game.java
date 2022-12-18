@@ -9,6 +9,7 @@ import tp1.p2.logic.actions.GameAction;
 import tp1.p2.logic.gameobjects.GameObject;
 import tp1.p2.logic.gameobjects.Sun;
 import tp1.p2.view.Messages;
+import tp1.p2.control.exceptions.GameException;
 import tp1.p2.control.Command;
 import tp1.p2.control.ExecutionResult;
 import tp1.p2.control.Level;
@@ -34,6 +35,7 @@ public class Game implements GameStatus, GameWorld{
 	private Deque<GameAction> actions;
 	
 	private SunsManager sunsManager;
+	private int score;
 
 
 	public Game(long seed, Level level) {
@@ -122,12 +124,10 @@ public class Game implements GameStatus, GameWorld{
 	}
 	
 	@Override
-	public boolean execute(Command command) 
+	public boolean execute(Command command) throws GameException 
 	{
-		ExecutionResult exRes = command.execute(this);
-		if(exRes.errorMessage() != null)
-		System.out.println(exRes.errorMessage());
-		return exRes.draw();
+		boolean print = command.execute(this);
+		return print;
 	}
 	/**
 	 * Draw a cell of the game.
@@ -313,5 +313,20 @@ public class Game implements GameStatus, GameWorld{
 	{
 		this.suncoins += value;
 		sunsManager.setCatchedSuns(value);
+	}
+	@Override
+	public void setScore(int points) 
+	{
+		score += points;	
+	}
+	
+	@Override
+	public String getLevelName() 
+	{
+		return this.level.name();
+	}
+	@Override
+	public int getScore() {
+		return score;
 	}
 }
