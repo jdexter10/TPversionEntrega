@@ -19,7 +19,7 @@ public interface GameWorld {
 	
 	void addSun();
 	
-	boolean tryToCatchObject(int col, int row);
+	boolean tryToCatchObject(int col, int row) throws GameException;
 
 	
 	boolean addItem(GameObject item);
@@ -27,7 +27,7 @@ public interface GameWorld {
 	void playerQuits();
 	
 	
-	void update();
+	void update() throws GameException ;
 	
 	public boolean execute(Command command)throws GameException ;
 	
@@ -35,15 +35,15 @@ public interface GameWorld {
 	
 	boolean isPositionEmpty(int col, int row);
 	
-	public boolean addNpc(GameObject gameObject);
+	public boolean addNpc(GameObject gameObject) throws GameException ; 
 	
-	public boolean tryToBuy(int cost);
+	public boolean tryToBuy(int cost) throws GameException;
 	
 	void zombieDied();
 	
-	void reset();
+	void reset() throws GameException;
 	
-	public void reset(Level level, long seed);
+	public void reset(Level level, long seed) throws GameException;
 	
 	public void pushAction(GameAction gameAction);
 	

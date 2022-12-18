@@ -9,6 +9,10 @@ import tp1.p2.logic.actions.GameAction;
 import tp1.p2.logic.gameobjects.GameObject;
 import tp1.p2.logic.gameobjects.Sun;
 import tp1.p2.view.Messages;
+import tp1.p2.control.exceptions.NotEnoughCoinsException;
+import tp1.p2.logic.GameObjectContainer;
+import tp1.p2.logic.SunsManager;
+import tp1.p2.logic.ZombiesManager;
 import tp1.p2.control.exceptions.GameException;
 import tp1.p2.control.Command;
 import tp1.p2.control.ExecutionResult;
@@ -48,7 +52,7 @@ public class Game implements GameStatus, GameWorld{
 	/**
 	 * Resets the game.
 	 */
-	public void reset() {
+	public void reset() throws GameException {
 		reset(this.level, this.seed);
 	}
 
@@ -58,20 +62,25 @@ public class Game implements GameStatus, GameWorld{
 	 * @param level {@link Level} Used to initialize the game.
 	 * @param seed Random seed Used to initialize the game.
 	 */
-	public void reset(Level level, long seed) {
+	public void reset(Level level, long seed) throws GameException {
 		System.out.println(String.format(Messages.CONFIGURED_LEVEL, level.name()));
 		System.out.println(String.format(Messages.CONFIGURED_SEED, seed));
 		suncoins = START_SUNS;
 		rand = new Random(seed);
 		cycle = 0;
 		playerQuits = false;
-		inicializar();
+		zombiesManager = new ZombiesManager(this,level,rand);
+		container = new GameObjectContainer();
+		actions = new ArrayDeque<>();
+		sunsManager = new SunsManager(this,rand);
+		score = 0;
 	}
 
 	/**
 	 * Update general, contiene el de los objetos, listas etc..
+	 * @throws GameException 
 	 */
-	public void update() {
+	public void update() throws GameException {
 
 	    // 1. Execute pending actions
 			executePendingActions();
@@ -288,14 +297,14 @@ public class Game implements GameStatus, GameWorld{
 	}
 	
 	@Override
-	public boolean tryToBuy(int cost) {
-		boolean ok = false;
-		if(cost <= suncoins)
+	public boolean tryToBuy(int cost)throws GameException  {
+		if(suncoins < cost) 
 		{
-			suncoins -= cost;
-			ok = true;
+			throw new NotEnoughCoinsException(Messages.NOT_ENOUGH_COINS);
 		}
-		return ok;
+		else 
+			suncoins -= cost;
+		return true;
 	}
 	
 	@Override

@@ -87,7 +87,7 @@ public class Messages {
 
 	public static final String RECORD = "Record: ";
 
-	public static final String RECORD_FILENAME = "record.txt";
+	public static final String RECORD_FILENAME = "records.txt";
 
 	public static final String RECORD_WRITE_ERROR = "An error ocurred on writing record to '%s'".formatted(RECORD_FILENAME);
 

@@ -66,6 +66,8 @@ public class GamePrinter {
 		buffer.append(Messages.NUMBER_OF_COINS + SPACE + game.getSuncoins() +  NEW_LINE);
 		
 		buffer.append(Messages.REMAINING_ZOMBIES + SPACE + game.getRemainingZombies() +  NEW_LINE);
+		
+		buffer.append("Score: " + game.getScore() + NEW_LINE);
 
 		return buffer.toString();
 	}

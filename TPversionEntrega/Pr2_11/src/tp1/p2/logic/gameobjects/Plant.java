@@ -48,7 +48,6 @@ public abstract class Plant extends GameObject{
 	
 	@Override
 	public boolean receiveZombieAttack(int damage) {
-		//Recibe daño si es un zombie el que ataca
 		receiveDamage(damage);
 		return true;
 	}

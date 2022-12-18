@@ -5,6 +5,7 @@ import java.util.Random;
 import tp1.p2.control.Level;
 import tp1.p2.logic.gameobjects.Zombie;
 import tp1.p2.logic.gameobjects.ZombieFactory;
+import tp1.p2.control.exceptions.GameException;
 
 /**
  * Manage zombies in the game.
@@ -31,7 +32,12 @@ public class ZombiesManager {
 		this.remainingZombies = level.getNumberOfZombies();
 		this.rand = rand;
 	}
-
+	
+	public void update() throws GameException
+	{
+		addZombie();
+	}
+	
 	private boolean shouldAddZombie() {
 		return rand.nextDouble() < level.getZombieFrequency();
 	}
@@ -40,12 +46,12 @@ public class ZombiesManager {
 		return rand.nextInt(GameWorld.NUM_ROWS);
 	}
 	
-	public boolean addZombie() {
+	public boolean addZombie() throws GameException {
 		int row = randomZombieRow();
 		return addZombie(row);
 	}
 	
-	public boolean addZombie(int row) {
+	public boolean addZombie(int row) throws GameException {
 		boolean canAdd = getRemainingZombies() > 0 && shouldAddZombie()
 				&& isPositionEmpty(GameWorld.NUM_COLS, row);
 

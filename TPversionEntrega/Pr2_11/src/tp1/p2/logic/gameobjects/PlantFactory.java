@@ -19,38 +19,28 @@ public class PlantFactory {
 
 	public static boolean isValidPlant(String plantName) {
 		for (Plant p : AVAILABLE_PLANTS) {
-			if(p.getName() == plantName)
+			if(plantName.equals(p.getName()) || plantName.equals(p.getSymbol().toLowerCase()) || plantName.equals(p.getName().toLowerCase()))
 				return true;
 		}
-
 		return false;
 	}
 
 	public static Plant spawnPlant(String plantName, GameWorld game, int col, int row) {
 		Plant plant = null;
-		if(plantName.equals("s"))
+		if(!isValidPlant(plantName)) return null;
+		else 
 		{
-			plant = new Sunflower(game,col,row);
+			for (Plant p : AVAILABLE_PLANTS) {
+				if(plantName.equals(p.getName()) ||plantName.equals(p.getSymbol().toLowerCase()) || plantName.equals(p.getName().toLowerCase()))
+					plant = p.copy(game,col,row);
+			}
 		}
-		else if(plantName.equals("p"))
-		{
-			plant = new Peashooter(game,col,row);
-		}
-		else if(plantName.equals("c"))
-		{
-			plant = new CherryBomb(game,col,row);
-		}
-		else if(plantName.equals("w"))
-		{
-			plant = new WallNut(game,col,row);
-		}
-		return plant;	
+		return plant;
 	}
 
 	public static List<Plant> getAvailablePlants() {
 		return Collections.unmodifiableList(AVAILABLE_PLANTS);
 	}
-
 	/*
 	 * Avoid creating instances of this class
 	 */

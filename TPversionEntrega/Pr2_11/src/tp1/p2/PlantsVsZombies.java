@@ -31,7 +31,8 @@ public class PlantsVsZombies {
 	 * 
 	 * @param args Arguments for the game.
 	 */
-	public static void main(String[] args) {
+	@SuppressWarnings("deprecation")
+	public static void main(String[] args) throws IOException {
 		// Required to avoid issues with tests
 		Locale.setDefault(new Locale("es", "ES"));
 

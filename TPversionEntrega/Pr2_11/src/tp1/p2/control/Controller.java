@@ -66,13 +66,13 @@ public class Controller {
 	/**
 	 * Runs the game logic.
 	 */
-	public void run() throws GameException, IOException{
+	public void run() throws GameException, IOException {
 		boolean refreshDisplay = true;
 		try 
 		{
 			game.reset();
 		}
-		catch(GameException ge) 
+		catch(GameException ge)
 		{
 			ge.getMessage();
 		}

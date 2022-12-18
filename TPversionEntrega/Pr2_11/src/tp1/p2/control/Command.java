@@ -18,6 +18,7 @@ import tp1.p2.control.commands.NoneCommand;
 import tp1.p2.control.commands.ResetCommand;
 import tp1.p2.logic.GameWorld;
 import tp1.p2.view.Messages;
+import tp1.p2.control.commands.ShowRecordCommand;
 import tp1.p2.control.Command;
 import tp1.p2.control.exceptions.CommandParseException;
 import tp1.p2.control.exceptions.GameException;
@@ -39,7 +40,8 @@ public abstract class Command {
 			new ListZombiesCommand(),
 			new AddZombieCommand(),
 			new AddPlantCheatCommand(),
-			new CatchCommand()
+			new CatchCommand(),
+			new ShowRecordCommand()
 	);
 	/* @formatter:on */
 
@@ -100,8 +102,8 @@ public abstract class Command {
 		}
 	
 	public static void newCycle() {
-		for(Command c : AVAILABLE_COMMANDS) {
-			c.newCycleStarted();
+		for(Command i : AVAILABLE_COMMANDS) {
+			i.newCycleStarted();
 		}
 	}
 	
