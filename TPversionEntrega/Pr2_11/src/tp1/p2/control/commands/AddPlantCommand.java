@@ -90,7 +90,8 @@ public class AddPlantCommand extends Command implements Cloneable {
 		row = Integer.parseInt(parameters[3]);
 		
 		
-		try {
+		try 
+		{
 			aux = new AddPlantCommand(true);
 
 			this.plantName = parameters[1];

@@ -82,7 +82,7 @@ public class Peashooter extends Plant {
 	@Override
 	public String getName() 
 	{
-		return Messages.PEASHOOTER_NAME;
+		return Messages.PEASHOOTER_NAME_SHORTCUT;
 	}
 	@Override
 	public int getCost() {

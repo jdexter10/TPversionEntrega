@@ -63,7 +63,7 @@ public class SunsManager {
 	}
 	
 	public void update() {
-		if (cooldown == 0) 
+		if (cooldown == 0)
 		{
 			addSun();
 			cooldown = COOLDOWN_RANDOM_SUN;

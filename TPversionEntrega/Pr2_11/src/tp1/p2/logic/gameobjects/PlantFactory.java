@@ -28,19 +28,19 @@ public class PlantFactory {
 
 	public static Plant spawnPlant(String plantName, GameWorld game, int col, int row) {
 		Plant plant = null;
-		if(plantName == "s")
+		if(plantName.equals("s"))
 		{
 			plant = new Sunflower(game,col,row);
 		}
-		else if(plantName == "p")
+		else if(plantName.equals("p"))
 		{
 			plant = new Peashooter(game,col,row);
 		}
-		else if(plantName == "c")
+		else if(plantName.equals("c"))
 		{
 			plant = new CherryBomb(game,col,row);
 		}
-		else if(plantName == "w")
+		else if(plantName.equals("w"))
 		{
 			plant = new WallNut(game,col,row);
 		}

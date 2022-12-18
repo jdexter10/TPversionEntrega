@@ -34,7 +34,7 @@ public class WallNut extends Plant {
 	 */
 	@Override
 	public String getName() {
-		return Messages.WALL_NUT_NAME;
+		return Messages.WALL_NUT_NAME_SHORTCUT;
 	}
 	/**
 	 * Retorna el SIMBOL del objeto

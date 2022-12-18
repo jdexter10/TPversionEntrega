@@ -58,7 +58,7 @@ public class Sunflower extends Plant {
 	@Override
 	public String getName() 
 	{
-		return Messages.PEASHOOTER_NAME;
+		return Messages.SUNFLOWER_NAME_SHORTCUT;
 	}
 
 	@Override

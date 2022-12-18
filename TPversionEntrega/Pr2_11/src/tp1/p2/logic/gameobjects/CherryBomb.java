@@ -38,7 +38,7 @@ public class CherryBomb extends Plant {
 	 */
 	@Override
 	public String getName() {
-		return Messages.CHERRY_BOMB_NAME;
+		return Messages.CHERRY_BOMB_NAME_SHORTCUT;
 	}
 	
 	@Override
