@@ -1,7 +1,5 @@
 	package tp1.p2.logic.gameobjects;
 
-import static tp1.p2.view.Messages.status;
-
 import tp1.p2.logic.GameItem;
 import tp1.p2.logic.GameWorld;
 //import tp1.p2.logic.actions.AddGameItemAction;
@@ -102,33 +100,17 @@ public abstract class GameObject implements GameItem {
 			return "";
 		}
 	}	
-	/**
-	 * Devuelve el símbolo del GameObject correspondiente 
-	 * 
-	 * @return <code>Símbolo</code> Símbolo correspondiente al GameObject.
-	 */
+	
 	abstract protected String getSymbol();
-	/**
-	 * Devuelve la descripción del GameObject correspondiente 
-	 * 
-	 * @return <code>Descripción</code> Descripción correspondiente al GameObject.
-	 */
+	
 	abstract public String getDescription();
-	/**
-	 * Actualiza la información del objeto
-	 */
+	
 	abstract public void update();
-	/**
-	 * Realiza las acciones correspondientes una vez añadido el objeto
-	 */
+	
 	abstract public void onEnter();
-	/**
-	 * Realiza las acciones correspondientes una vez eliminado el objeto
-	 */
+	
 	abstract public void onExit();
-	/**
-	 * Ejecuta la acción que lleva a cabo.
-	 */
+	
 	public void delayedAction()
 	{
 		

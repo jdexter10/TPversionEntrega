@@ -7,15 +7,10 @@ import java.util.Random;
 
 import tp1.p2.logic.actions.GameAction;
 import tp1.p2.logic.gameobjects.GameObject;
-import tp1.p2.logic.gameobjects.Sun;
 import tp1.p2.view.Messages;
 import tp1.p2.control.exceptions.NotEnoughCoinsException;
-import tp1.p2.logic.GameObjectContainer;
-import tp1.p2.logic.SunsManager;
-import tp1.p2.logic.ZombiesManager;
 import tp1.p2.control.exceptions.GameException;
 import tp1.p2.control.Command;
-import tp1.p2.control.ExecutionResult;
 import tp1.p2.control.Level;
 
 public class Game implements GameStatus, GameWorld{
@@ -42,12 +37,11 @@ public class Game implements GameStatus, GameWorld{
 	private int score;
 
 
-	public Game(long seed, Level level) {
-		
+	public Game(long seed, Level level) 
+	{	
 		this.seed = seed;
 		this.level = level;
-		
-
+		inicializar();
 	}
 	/**
 	 * Resets the game.
@@ -87,7 +81,7 @@ public class Game implements GameStatus, GameWorld{
 
 			// 2. Execute game Actions
 			zombiesManager.addZombie();
-			//suncoins += generatedSuns; revisar esto
+
 			// 3. Game object updates
 			container.update();
 			sunsManager.update();
@@ -292,19 +286,22 @@ public class Game implements GameStatus, GameWorld{
 			return true;
 		}
 		else
-		return false;
-		
+		return false;	
 	}
 	
 	@Override
 	public boolean tryToBuy(int cost)throws GameException  {
+		boolean ok = true;
 		if(suncoins < cost) 
 		{
+			ok = false;
 			throw new NotEnoughCoinsException(Messages.NOT_ENOUGH_COINS);
 		}
 		else 
+		{
 			suncoins -= cost;
-		return true;
+		}
+		return ok;
 	}
 	
 	@Override

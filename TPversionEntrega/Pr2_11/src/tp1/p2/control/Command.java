@@ -81,8 +81,7 @@ public abstract class Command {
 	public boolean matchCommand(String token) {
 		String shortcut = getShortcut();
 		String name = getName();
-		return shortcut.equalsIgnoreCase(token) || name.equalsIgnoreCase(token)
-				|| (isDefaultAction() && "".equals(token));
+		return shortcut.equalsIgnoreCase(token) || name.equalsIgnoreCase(token) || (isDefaultAction() && "".equals(token));
 	}
 
 	/**
@@ -107,7 +106,8 @@ public abstract class Command {
 		}
 	}
 	
-	protected void newCycleStarted() {
+	protected void newCycleStarted() 
+	{
 		
 	}
 

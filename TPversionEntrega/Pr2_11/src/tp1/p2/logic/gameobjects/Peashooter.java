@@ -1,10 +1,8 @@
 package tp1.p2.logic.gameobjects;
 
-import tp1.p2.logic.GameItem;
 import tp1.p2.logic.GameWorld;
 import tp1.p2.view.Messages;
 import tp1.p2.logic.gameobjects.Peashooter;
-import tp1.p2.logic.gameobjects.Plant;
 
 public class Peashooter extends Plant {
 	
@@ -32,12 +30,12 @@ public class Peashooter extends Plant {
 		int i = this.col + 1;//Empieza a buscar desde la posicion siguiente a la que esta la peashooter
 		if(isAlive()) 
 		{  
-			while(!found && i < game.NUM_COLS)//Mientras que no se haya encontrado un zombie al que disparar o mientras que no se hayan revisado todas las columnas de la misma fila
+			while(!found && i < GameWorld.NUM_COLS)//Mientras que no se haya encontrado un zombie al que disparar o mientras que no se hayan revisado todas las columnas de la misma fila
 			{
-				GameItem item = game.getGameItemInPosition(i, row);//Se comprueba si hay un objeto en la posicion buscada
-			    if(item != null && cooldownCycles >= ATTACK_SPEED)//Si lo hay y la peashooter no está en cooldownCycles le dispara
+				GameObject object = game.getObjectInPosition(i, row);//Se comprueba si hay un objeto en la posicion buscada
+			    if(object != null && cooldownCycles >= ATTACK_SPEED)//Si lo hay y la peashooter no está en cooldownCycles le dispara
 			    {  
-			    	found = item.receivePlantAttack(DAMAGE);//Le ataca y si no era un zombie se sigue el bucle
+			    	found = object.receivePlantAttack(DAMAGE);//Le ataca y si no era un zombie se sigue el bucle
 			    	if(found)
 			    	{
 			    		cooldownCycles = 0;//Si ha disparado a un zombie se resetea su cooldownCycles
@@ -84,7 +82,7 @@ public class Peashooter extends Plant {
 	@Override
 	public String getName() 
 	{
-		return Messages.PEASHOOTER_NAME_SHORTCUT;
+		return Messages.PEASHOOTER_NAME;
 	}
 	@Override
 	public int getCost() {

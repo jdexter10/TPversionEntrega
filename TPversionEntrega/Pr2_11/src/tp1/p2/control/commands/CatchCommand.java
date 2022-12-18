@@ -1,12 +1,11 @@
 package tp1.p2.control.commands;
 
-import static tp1.p2.view.Messages.error;
-
 import tp1.p2.control.Command;
-import tp1.p2.control.ExecutionResult;
 import tp1.p2.logic.GameItem;
 import tp1.p2.logic.GameWorld;
 import tp1.p2.view.Messages;
+import tp1.p2.control.commands.CatchCommand;
+import tp1.p2.control.exceptions.CommandParseException;
 import tp1.p2.control.exceptions.CommandExecuteException;
 import tp1.p2.control.exceptions.GameException;
 
@@ -58,34 +57,40 @@ public class CatchCommand extends Command {
 	public boolean execute(GameWorld game) throws GameException{
 		GameItem item = game.getGameItemInPosition(col , row);
 		
-		//Si la posición está vacía o no es una planta
 		if((game.isPositionEmpty(this.col,row)) || (!game.isPositionEmpty(this.col,row) && (item.receivePlantAttack(0) || item.receiveZombieAttack(0))) ) 
 		{
 			throw new CommandExecuteException(Messages.NO_CATCHABLE_IN_POSITION.formatted(this.col,this.row));
 		}
-		//Comprueba si ya se ha cogido un sol en el ciclo
+		//Solo un sol por ciclo se puede coger
 		if(caughtSunThisCycle) 
 		{
 			throw new CommandExecuteException(Messages.SUN_ALREADY_CAUGHT);
 		}
-		
 		caughtSunThisCycle = game.tryToCatchObject(col, row);
-		
-		
 		return true;
 	}
 	
 	@Override
-	public Command create(String[] parameters) 
+	public Command create(String[] parameters) throws GameException 
 	{
-		CatchCommand aux = new CatchCommand();
+		Command ca = new CatchCommand();
 		int col, row;
-		col = Integer.parseInt(parameters[1]);
-		row = Integer.parseInt(parameters[2]);
+		try 
+		{
+			col = Integer.parseInt(parameters[1]);
+			row = Integer.parseInt(parameters[2]);
 			this.col = col;
 			this.row = row;
-			return this;
+			ca = new CatchCommand(col,row);
+		}
+		catch(NumberFormatException nfe) 
+		{
+		    throw new CommandParseException(Messages.INVALID_POSITION.formatted(parameters[1], parameters[2]), nfe);
+		}
+		if(col >= GameWorld.NUM_COLS || row >= GameWorld.NUM_ROWS || col < 0 || row < 0) 
+		{
+			throw new CommandParseException(Messages.COMMAND_INCORRECT_PARAMETER_NUMBER);
+		}
+		return ca;		
 	}
-
-
 }

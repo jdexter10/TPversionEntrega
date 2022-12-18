@@ -31,7 +31,6 @@ public class PlantsVsZombies {
 	 * 
 	 * @param args Arguments for the game.
 	 */
-	@SuppressWarnings("deprecation")
 	public static void main(String[] args) throws IOException {
 		// Required to avoid issues with tests
 		Locale.setDefault(new Locale("es", "ES"));
@@ -57,19 +56,20 @@ public class PlantsVsZombies {
 
 			System.out.println(Messages.WELCOME);
 
-			System.out.println(String.format(Messages.CONFIGURED_LEVEL, level.name()));
-			System.out.println(String.format(Messages.CONFIGURED_SEED, seed));
-
 			Game game = new Game(seed, level);
 			Scanner scanner = new Scanner(System.in);
 			Controller controller = new Controller(game, scanner);
 			controller.run();
 
-		} catch (NumberFormatException nfe) {
+		}
+		catch (NumberFormatException nfe) 
+		{
 			System.out.println(String.format(Messages.SEED_NOT_A_NUMBER_ERROR, seedParam));
 			usage();
 			return;
-		} catch (GameException e) {
+		} 
+		catch (GameException e) 
+		{
 			System.out.println(error(e.getMessage()));
 		}
 

@@ -2,7 +2,6 @@ package tp1.p2.logic.gameobjects;
 
 import tp1.p2.logic.GameWorld;
 import tp1.p2.view.Messages;
-import tp1.p2.logic.gameobjects.Plant;
 import tp1.p2.logic.gameobjects.WallNut;
 
 public class WallNut extends Plant {
@@ -36,7 +35,7 @@ public class WallNut extends Plant {
 	 */
 	@Override
 	public String getName() {
-		return Messages.WALL_NUT_NAME_SHORTCUT;
+		return Messages.WALL_NUT_NAME;
 	}
 	/**
 	 * Retorna el SIMBOL del objeto

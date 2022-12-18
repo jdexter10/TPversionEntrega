@@ -1,7 +1,5 @@
 package tp1.p2.logic;
 
-import tp1.p2.control.ExecutionResult;
-import tp1.p2.logic.gameobjects.GameObject;
 
 public interface GameStatus {
 

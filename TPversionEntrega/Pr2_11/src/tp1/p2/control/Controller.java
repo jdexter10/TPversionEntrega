@@ -72,32 +72,37 @@ public class Controller {
 		{
 			game.reset();
 		}
-		catch(GameException ge)
+		catch(GameException g)
 		{
-			ge.getMessage();
+			g.getMessage();
 		}
 		
-		while (!game.isFinished() && !game.isPlayerQuits()) {
+		while (!game.isFinished() && !game.isPlayerQuits()) 
+		{
 
 			// 1. Draw
-			if (refreshDisplay) {
+			if (refreshDisplay) 
+			{
 				printGame();
 			}
 
 			// 2. User action
 			String[] words = prompt();
 
-			if (words.length == 0) {
+			if (words.length == 0) 
+			{
 				System.out.println(error(Messages.UNKNOWN_COMMAND));
 			} 
 			else {
-				try {
+				try 
+				{
 					refreshDisplay = false;
 				
 				Command command = Command.parse(words);
 				refreshDisplay = game.execute(command);
 				} 
-				catch (GameException e) {
+				catch (GameException e) 
+				{
 					System.out.println(error(e.getMessage()));
 				}
 			}

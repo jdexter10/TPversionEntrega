@@ -3,7 +3,6 @@ package tp1.p2.control.commands;
 import static tp1.p2.view.Messages.error;
 
 import tp1.p2.control.Command;
-import tp1.p2.control.ExecutionResult;
 import tp1.p2.control.Level;
 import tp1.p2.logic.GameWorld;
 import tp1.p2.view.Messages;
@@ -58,7 +57,7 @@ public boolean execute(GameWorld game)throws GameException{
 	
 	
 	@Override
-	public Command create(String[] parameters) {
+	public Command create(String[] parameters) throws GameException{
 		
 		
 		if(parameters.length==3) {

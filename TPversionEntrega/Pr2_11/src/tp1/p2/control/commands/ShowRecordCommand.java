@@ -17,42 +17,22 @@ import tp1.p2.view.Messages;
 
 public class ShowRecordCommand extends Command {
 
-	/**
-	 * Recibe el nombre del comando
-	 * 
-	 * 
-	 * @return Un String con el nombre del comando
-	 */
+	
 	@Override
 	protected String getName() {
 		return Messages.COMMAND_SHOW_RECORD_NAME;
 	}
-	/**
-	 * Recibe el shortCut del comando
-	 * 
-	 * 
-	 * @return Un String con el shortCut del comando
-	 */
+	
 	@Override
 	protected String getShortcut() {
 		return Messages.COMMAND_SHOW_RECORD_SHORTCUT;
 	}
-	/**
-	 * Recibe los detalles del comando
-	 * 
-	 * 
-	 * @return Un String con los detalles del comando
-	 */
+	
 	@Override
 	public String getDetails() {
 		return Messages.COMMAND_SHOW_RECORD_DETAILS;
 	}
-	/**
-	 * Recibe la información del comando
-	 * 
-	 * 
-	 * @return Un String con la información del comando
-	 */
+	
 	@Override
 	public String getHelp() {
 		return Messages.COMMAND_SHOW_RECORD_HELP;
@@ -90,7 +70,9 @@ public class ShowRecordCommand extends Command {
 		} catch (InputMismatchException ime) 
 		{
 			throw new RecordException(Messages.RECORD_READ_ERROR);
-		} catch (FileNotFoundException e) {
+		} 
+		catch (FileNotFoundException e) 
+		{
 			throw new RecordException(Messages.RECORD_READ_ERROR);
 		}
 		return false;

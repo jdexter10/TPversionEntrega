@@ -18,7 +18,8 @@ public class PlantFactory {
 	/* @formatter:on */
 
 	public static boolean isValidPlant(String plantName) {
-		for (Plant p : AVAILABLE_PLANTS) {
+		for (Plant p : AVAILABLE_PLANTS) 
+		{
 			if(plantName.equals(p.getName()) || plantName.equals(p.getSymbol().toLowerCase()) || plantName.equals(p.getName().toLowerCase()))
 				return true;
 		}
@@ -27,7 +28,7 @@ public class PlantFactory {
 
 	public static Plant spawnPlant(String plantName, GameWorld game, int col, int row) {
 		Plant plant = null;
-		if(!isValidPlant(plantName)) return null;
+		if(!isValidPlant(plantName)) return plant;
 		else 
 		{
 			for (Plant p : AVAILABLE_PLANTS) {
@@ -38,7 +39,8 @@ public class PlantFactory {
 		return plant;
 	}
 
-	public static List<Plant> getAvailablePlants() {
+	public static List<Plant> getAvailablePlants() 
+	{
 		return Collections.unmodifiableList(AVAILABLE_PLANTS);
 	}
 	/*

@@ -17,7 +17,6 @@ import java.util.Scanner;
 import tp1.p2.logic.GameStatus;
 import tp1.p2.logic.GameWorld;
 import tp1.p2.control.exceptions.RecordException;
-import tp1.p2.view.Messages;
 import tp1.utils.StringUtils;
 
 public class GamePrinter {
@@ -185,10 +184,13 @@ public String setRecord() throws RecordException, IOException
 				File dump = new File(Messages.RECORD_FILENAME);
 				newFile.renameTo(dump);
 
-			} catch (InputMismatchException ime) 
+			} 
+			catch (InputMismatchException ime) 
 			{
 				throw new RecordException(Messages.RECORD_READ_ERROR + " or " + Messages.RECORD_WRITE_ERROR);
-			} catch (FileNotFoundException e) {
+			} 
+			catch (FileNotFoundException e) 
+			{
 				throw new RecordException(Messages.RECORD_READ_ERROR + " or " + Messages.RECORD_WRITE_ERROR);
 			}
 			catch(IOException  ioe) 
@@ -197,7 +199,6 @@ public String setRecord() throws RecordException, IOException
 			}
 			if(bigger) 
 			{
-		
 				buffer.append(Messages.NEW_RECORD);
 				buffer.append(game.getLevelName());
 				buffer.append(SPACE);

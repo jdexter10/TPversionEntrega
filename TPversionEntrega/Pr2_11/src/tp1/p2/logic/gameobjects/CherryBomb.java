@@ -1,11 +1,9 @@
 package tp1.p2.logic.gameobjects;
 
-import tp1.p2.logic.GameItem;
 import tp1.p2.logic.GameWorld;
 import tp1.p2.logic.actions.ExplosionAction;
 import tp1.p2.view.Messages;
 import tp1.p2.logic.gameobjects.CherryBomb;
-import tp1.p2.logic.gameobjects.Plant;
 
 public class CherryBomb extends Plant {
 	
@@ -40,7 +38,7 @@ public class CherryBomb extends Plant {
 	 */
 	@Override
 	public String getName() {
-		return Messages.CHERRY_BOMB_NAME_SHORTCUT;
+		return Messages.CHERRY_BOMB_NAME;
 	}
 	
 	@Override
@@ -61,14 +59,14 @@ public class CherryBomb extends Plant {
 	@Override
 	public void update() {
 		boolean carryAction = cooldownCycles == ACTION_DELAY;
-		GameItem item;
 		if(isAlive() && carryAction) {
 			delayedAction();
-			
 			lives = 0;
 	    }
 		else 
+		{
 			cooldownCycles++;
+		}
 	}
 	/**
 	 * Ejecuta la accion que lleva a cabo.

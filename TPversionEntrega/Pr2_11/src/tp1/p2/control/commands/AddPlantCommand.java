@@ -1,8 +1,6 @@
 package tp1.p2.control.commands;
 
 import tp1.p2.control.Command;
-import tp1.p2.control.ExecutionResult;
-import tp1.p2.logic.GameItem;
 import tp1.p2.logic.GameWorld;
 import tp1.p2.logic.gameobjects.Plant;
 import tp1.p2.logic.gameobjects.PlantFactory;
@@ -61,22 +59,21 @@ public class AddPlantCommand extends Command implements Cloneable {
 	public boolean execute(GameWorld game) throws GameException {
 		GameObject object = game.getObjectInPosition(col , row);
 		
-		//Si hay un zombie o una planta en la posición introducida
 		if(!game.isPositionEmpty(this.col,row) && (object.fillsPosition())) 
 		{
 			throw new CommandExecuteException(Messages.INVALID_POSITION.formatted(this.col, this.row));
 		}
 		
-		//Crea la planta con los valores introducidos
 		Plant plant = PlantFactory.spawnPlant(this.plantName, game, this.col, this.row);
 		
-		//Comprueba si hay suficientes sunCoins para comprar la planta
 		if(plant == null)
+		{
 			throw new CommandExecuteException(Messages.ERROR.formatted("Invalid plant name"));
+		}
+		
 		try 
 		{
 			game.tryToBuy(plant.getCost());
-			//Añade la planta al juego
 			game.addNpc(plant);
 			game.update();
 		}
@@ -90,16 +87,16 @@ public class AddPlantCommand extends Command implements Cloneable {
 	
 	@Override
 	public Command create(String[] parameters) throws GameException{
-		AddPlantCommand aux = new AddPlantCommand(false);
+		AddPlantCommand plant = new AddPlantCommand(false);
 		int col,row;
 		try {
-			aux = new AddPlantCommand(true);
+			plant = new AddPlantCommand(true);
 			col = Integer.parseInt(parameters[2]);
 			row = Integer.parseInt(parameters[3]);
 			this.plantName = parameters[1];
 			this.col = col;
 			this.row = row;
-			aux = (AddPlantCommand)this.clone();
+			plant = (AddPlantCommand)this.clone();
 		} 
 		catch (CloneNotSupportedException e) {
 			e.printStackTrace();
@@ -108,13 +105,11 @@ public class AddPlantCommand extends Command implements Cloneable {
 		{
 			throw new CommandParseException(Messages.INVALID_POSITION.formatted(parameters[1], parameters[2]), nfe);
 		}
-		
-		//Si los valores introducidos no se encuentran entre los predeterminados
 		if(this.col >= GameWorld.NUM_COLS || this.row >= GameWorld.NUM_ROWS || this.col < 0 || this.row < 0) 
 		{
 			throw new CommandParseException(Messages.COMMAND_INCORRECT_PARAMETER_NUMBER.formatted(this.col,this.row));
 		}
-		return aux;
+		return plant;
 	}
 
 }
