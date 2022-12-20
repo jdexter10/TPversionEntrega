@@ -7,12 +7,11 @@ package tp1.p2.control;
  */
 public enum Level {
 
-	EASY(3, 0.1),
-	HARD(5, 0.2),
-	INSANE(10, 0.3);
+	EASY(3, 0.1), HARD(5, 0.2), INSANE(10, 0.3);
 	
 
 	private int numberOfZombies;
+	
 	private double zombieFrequency;
 	
 
@@ -56,17 +55,11 @@ public enum Level {
 		}
 		return buffer.toString();
 	}
-	/**
-	 * Devuelve el número de zombies que aparecen dependiendo del nivel
-	 * @return Número de zombies que aparecen.
-	 */
+	
 	public int getNumberOfZombies() {
 		return this.numberOfZombies; 
 	}
-	/**
-	 * Devuelve la frecuencia con la que los zombies aparecen dependiendo del nivel
-	 * @return  Frecuencia con la que los zombies que aparecen.
-	 */
+	
 	public double getZombieFrequency() {
 		return this.zombieFrequency;
 	}

@@ -7,6 +7,7 @@ import tp1.p2.view.Messages;
 public class ExplosiveZombie extends Zombie{
 	
 	private final static int EXPLOSION_DAMAGE = 3;
+	
 	public ExplosiveZombie(GameWorld game, int col, int row) 
 	{
 		super(game,col,row);
@@ -16,7 +17,7 @@ public class ExplosiveZombie extends Zombie{
 		
 	}
 	/**
-	 * Devuelve el nombre del GameObject correspondiente 
+	 * Retorna el NAME del objeto.
 	 * 
 	 * @return Nombre
 	 */
@@ -28,14 +29,14 @@ public class ExplosiveZombie extends Zombie{
 	/**
 	 * Devuelve el símbolo del GameObject correspondiente 
 	 * 
-	 * @return <code>Símbolo</code> Símbolo correspondiente al GameObject.
+	 * @return <code>Simbolo</code> Símbolo correspondiente al GameObject.
 	 */
 	@Override
 	protected String getSymbol() {
 		return Messages.EXPLOSIVE_ZOMBIE_SYMBOL;
 	}
 	/**
-	 * Ejecuta la acción que lleva a cabo.
+	 * Lleva a cabo la accion.
 	 */
 	@Override
 	public void delayedAction()
@@ -43,7 +44,7 @@ public class ExplosiveZombie extends Zombie{
 		//Crea una ExplosionAction que afecta a las plantas
 		ExplosionAction explosionAction = new ExplosionAction(col,row,EXPLOSION_DAMAGE,false);
 		
-		//La añade al array de acciones
+		//La anade al array de acciones
 		game.pushAction(explosionAction);
 		
 	}

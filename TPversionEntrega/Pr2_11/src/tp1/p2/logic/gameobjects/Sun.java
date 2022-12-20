@@ -15,9 +15,12 @@ public class Sun extends GameObject{
 	}
 	
 	public String toString() {
-		if (isAlive()) {
-			return Messages.GAME_OBJECT_STATUS.formatted(getSymbol(),lives) ;
-		} else {
+		if (isAlive()) 
+		{
+			return Messages.GAME_OBJECT_STATUS.formatted(getSymbol(), lives) ;
+		} 
+		else 
+		{
 			return "";
 		}
 	}
@@ -49,10 +52,11 @@ public class Sun extends GameObject{
 	@Override
 	public boolean catchObject() {
 		if(!isAlive())
+		{
 			return false;
-		
-		game.addCatchedSuns(SUN_VALUE);//Añade el sol cogido al game
-		this.lives = 0;//El sol desaparece ya que ha sido cogido
+		}
+		game.addCatchedSuns(SUN_VALUE);
+		this.lives = 0;
 		return true;
 
 	}
@@ -73,7 +77,7 @@ public class Sun extends GameObject{
 
 	@Override
 	public void update() {//Por cada ciclo el sol pierde "tiempo" de vida
-		lives--;
+		this.lives--;
 	}
 
 	@Override
@@ -82,8 +86,12 @@ public class Sun extends GameObject{
 
 	@Override
 	public void onExit() {
-		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public boolean fillsPosition() {
+		return false;
 	}
 	
 }

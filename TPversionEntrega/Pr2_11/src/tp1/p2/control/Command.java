@@ -18,6 +18,10 @@ import tp1.p2.control.commands.NoneCommand;
 import tp1.p2.control.commands.ResetCommand;
 import tp1.p2.logic.GameWorld;
 import tp1.p2.view.Messages;
+import tp1.p2.control.commands.ShowRecordCommand;
+import tp1.p2.control.Command;
+import tp1.p2.control.exceptions.CommandParseException;
+import tp1.p2.control.exceptions.GameException;
 
 /**
  * Represents a user action in the game.
@@ -36,7 +40,8 @@ public abstract class Command {
 			new ListZombiesCommand(),
 			new AddZombieCommand(),
 			new AddPlantCheatCommand(),
-			new CatchCommand()
+			new CatchCommand(),
+			new ShowRecordCommand()
 	);
 	/* @formatter:on */
 
@@ -60,57 +65,23 @@ public abstract class Command {
 		return Collections.unmodifiableList(AVAILABLE_COMMANDS);
 	}
 	
-	/**
-	 * Recibe el nombre del comando
-	 * 
-	 * 
-	 * @return Un String con el nombre del comando
-	 */
-	abstract protected String getName();
 	
-	/**
-	 * Recibe el shortCut del comando
-	 * 
-	 * 
-	 * @return Un String con el shortCut del comando
-	 */
+	abstract protected String getName();
+
 	abstract protected String getShortcut();
-	/**
-	 * Recibe los detalles del comando
-	 * 
-	 * 
-	 * @return Un String con los detalles del comando
-	 */
+	
 	abstract public String getDetails();
-	/**
-	 * Recibe la información del comando
-	 * 
-	 * 
-	 * @return Un String con la información del comando
-	 */
+	
 	abstract public String getHelp();
-	/**
-	 * Comprueba si es la acción por defecto
-	 * 
-	 * @return <code>true</code> Si es el commando por deafualt <code>false</code>
-	 *         otherwise.
-	 */
+	
 	public boolean isDefaultAction() {
 		return Command.defaultCommand == this;
 	}
-	/**
-	 * Comprueba si el comando introducido por consola coincide con alguno
-	 * 
-	 * @param token Nombre del comando introducido por consola
-	 * 
-	 * @return <code>true</code> Si hay un comando que coincide con el introducido <code>false</code>
-	 *         otherwise.
-	 */
+	
 	public boolean matchCommand(String token) {
 		String shortcut = getShortcut();
 		String name = getName();
-		return shortcut.equalsIgnoreCase(token) || name.equalsIgnoreCase(token)
-				|| (isDefaultAction() && "".equals(token));
+		return shortcut.equalsIgnoreCase(token) || name.equalsIgnoreCase(token) || (isDefaultAction() && "".equals(token));
 	}
 
 	/**
@@ -120,29 +91,23 @@ public abstract class Command {
 	 * 
 	 * @return {@code true} if game board must be printed {@code false} otherwise.
 	 */
-	public abstract ExecutionResult execute(GameWorld game);
-	/**
-	 * Crea el comando según los parámetros introducidos por consola
-	 * 
-	 * @param parameters Parametros introducidos por consola
-	 * 
-	 * @return El comando creado
-	 */
-	public Command create(String[] parameters) {
-		return this;
-	}
-	/**
-	 * Informa a los comandos de que ha comenzado un nuevo ciclo y ejecuta la acción que corresponde
-	 */
+	public abstract boolean execute(GameWorld game) throws GameException;
+	
+	public Command create(String[] parameters) throws GameException {
+		  if (parameters.length == 0) {
+		    throw new CommandParseException(Messages.COMMAND_INCORRECT_PARAMETER_NUMBER);
+		  }
+		  return this;
+		}
+	
 	public static void newCycle() {
-		for(Command c : AVAILABLE_COMMANDS) {
-			c.newCycleStarted();
+		for(Command i : AVAILABLE_COMMANDS) {
+			i.newCycleStarted();
 		}
 	}
-	/**
-	 * Ejecuta la acción correspondiente al nuevo ciclo
-	 */
-	protected void newCycleStarted() {
+	
+	protected void newCycleStarted() 
+	{
 		
 	}
 

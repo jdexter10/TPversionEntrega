@@ -35,11 +35,13 @@ public class BucketHead extends Zombie{
 	protected String getSymbol() {
 		return Messages.BUCKET_HEAD_ZOMBIE_SYMBOL;
 	}
+	
 	@Override 
 	public int getSpeed() 
 	{
 		return SPEED;
 	}
+	
 	@Override 
 	public int getEndurance() 
 	{

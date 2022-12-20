@@ -26,25 +26,25 @@ public class SunsManager {
 		this.generatedSuns = 0;
 	}
 	/**
-	 * Devuelve los soles recogidos durante el juego
+	 * Retorna los suns Catched.
 	 * 
-	 * @return los soles recogidos durante el juego 
+	 * @return Soles recogidos en game 
 	 */
 	public int getCatchedSuns() {
 		return this.catchedSuns;
 	}
 	/**
-	 * Devuelve los soles generados durante el juego
+	 * Retorna los suns generated.
 	 * 
-	 * @return los soles generados durante el juego 
+	 * @return Soles generados en game
 	 */
 	public int getGeneratedSuns() {
 		return this.generatedSuns;
 	}
 	/**
-	 * Cambia el valor de los soles cogidos durante el juego
+	 * Actualiza el valor de suns sumado a los recogidos.
 	 * 
-	 * @param suns Soles a sumar
+	 * @param suns += soles cogidos
 	 * 
 	 */
 	public void setCatchedSuns(int suns) 
@@ -52,40 +52,32 @@ public class SunsManager {
 		this.catchedSuns += suns;
 	}
 	/**
-	 * Cambia el valor de los soles generados durante el juego
+	 *Actualiza el valor de suns sumado a los generados.
 	 * 
-	 * @param suns Soles a sumar
+	 * @param suns += soles generados
 	 * 
 	 */
 	public void setGeneratedSuns(int suns) 
 	{
 		this.generatedSuns += suns;
 	}
-	/**
-	 * Añade un nuevo sol al juego si la aparición de soles aleatorios no está en cooldown
-	 * 
-	 */
+	
 	public void update() {
-		if (cooldown == 0) {
+		if (cooldown == 0)
+		{
 			addSun();
 			cooldown = COOLDOWN_RANDOM_SUN;
-		} else {
+		} 
+		else 
+		{
 			cooldown--;
 		}
 	}
-	/**
-	 * Devuelve un número aleatorio
-	 * 
-	 * @param bound nextInt
-	 * 
-	 * @return Un número random
-	 */
+	
 	private int getRandomInt(int bound) {
 		return this.rand.nextInt(bound);
 	}
-	/**
-	 * Añade un nuevo sol al juego
-	 */
+	
 	public void addSun() {
 		int col = getRandomInt(GameWorld.NUM_COLS);
 		int row = getRandomInt(GameWorld.NUM_ROWS);

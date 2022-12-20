@@ -2,6 +2,7 @@ package tp1.p2.logic.gameobjects;
 
 import tp1.p2.logic.GameWorld;
 import tp1.p2.view.Messages;
+import tp1.p2.logic.gameobjects.Plant;
 
 public abstract class Plant extends GameObject{
 	
@@ -16,17 +17,20 @@ public abstract class Plant extends GameObject{
 	}
 		
 	public String toString() {
-		if (isAlive()) {
+		if (isAlive()) 
+		{
 			return Messages.GAME_OBJECT_STATUS.formatted(getSymbol(),lives) ;
-		} else {
+		} 
+		else 
+		{
 			return "";
 		}
 	}
 	public abstract int getCost();
 	/**
-	 * Devuelve el nombre del GameObject correspondiente 
+	 * Retorna el NAME del objeto
 	 * 
-	 * @return Nombre
+	 * @return NAME
 	 */
 	public abstract String getName(); 
 	/**
@@ -41,34 +45,32 @@ public abstract class Plant extends GameObject{
 	public boolean receivePlantAttack(int damage) {	
 		return false;
 	}
-	/**
-	 * Receive a zombie attack.
-	 * 
-	 * @param damage Received damage.
-	 * 
-	 * @return <code>true</code> if a plant has been attacked, <code>false</code>
-	 *         otherwise.
-	 */
+	
 	@Override
 	public boolean receiveZombieAttack(int damage) {
-		//Recibe daño si es un zombie el que ataca
 		receiveDamage(damage);
 		return true;
 	}
-	/**
-	 * Realiza las acciones correspondientes una vez añadido el objeto
-	 */
+	
 	@Override
-	public void onEnter() {}
-	/**
-	 * Realiza las acciones correspondientes una vez eliminado el objeto
-	 */
+	public void onEnter()
+	{
+		
+	}
+	
 	@Override
-	public void onExit() {}
+	public void onExit() 
+	{
+		
+	}
 	
+	@Override
+	public boolean fillsPosition() 
+	{
+		return true;
+	}
 	
-	
-	
+	public abstract Plant copy(GameWorld game, int col, int row);
 }
 	
 	

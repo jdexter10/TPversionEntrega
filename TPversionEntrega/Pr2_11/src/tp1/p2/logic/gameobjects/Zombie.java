@@ -15,8 +15,9 @@ public class Zombie extends GameObject {
 		super(game,col,row);
 		this.lives = getEndurance();
 	}
-	public Zombie() {
-		// TODO Auto-generated constructor stub
+	public Zombie() 
+	{
+		
 	}
 		
 	
@@ -27,41 +28,43 @@ public class Zombie extends GameObject {
 	
 	public void update() 
 	{
-		GameItem item = game.getGameItemInPosition(this.col - 1, row);//Coge al objeto que está en la posición en la que puede atacar
+		GameItem item = game.getGameItemInPosition(this.col - 1, row);
 		if(isAlive())
 		{
-			 if(item != null)//Si hay un objeto
+			 if(item != null)
 			 {  
-				item.receiveZombieAttack(getDamage());//Lo ataca
+				item.receiveZombieAttack(getDamage());
 			
 				if((game.isPositionEmpty(this.col - 1,row)) || (!game.isPositionEmpty(this.col - 1,row) && !item.receivePlantAttack(0) && !item.receiveZombieAttack(0)))//Si la posición está libre o si en ella está un sol 
 				{
-					if(coolDown == getSpeed())//Si no está en coolDwon de moverse
+					if(cooldownCycles == getSpeed())
 					{
-					col--;//Se mueve
-					coolDown = 0;//Se resetea el coolDown de moverse
+					col--;
+					cooldownCycles = 0;
 					}
 					else
-						coolDown++;//Si no ataca ni se mueve se actualiza su coolDown
+						cooldownCycles++;
 				}
 			}
-			else//Si hay un objeto enfrente actualiza su coolDown
+			else
 			{
-				if(coolDown == getSpeed())//Si no está en coolDwon de moverse
+				if(cooldownCycles == getSpeed())
 				{
-				col--;//Se mueve
-				coolDown = 0;//Se resetea el coolDown de moverse
+				col--;
+				cooldownCycles = 0;
 				}
 				else
-					coolDown++;//Si no ataca ni se mueve se actualiza su coolDown
+				{
+					cooldownCycles++;
+				}
 			}
 		}
 	   
 	}
 	/**
-	 * Devuelve el nombre del GameObject correspondiente 
+	 * Retorna el NAME del objeto.
 	 * 
-	 * @return Nombre
+	 * @return NAME
 	 */
 	public String getName() 
 	{
@@ -72,9 +75,9 @@ public class Zombie extends GameObject {
 		return false;
 	}
 	/**
-	 * Devuelve el símbolo del GameObject correspondiente 
+	 * Retorna el SYMBOL del objeto.
 	 * 
-	 * @return <code>Símbolo</code> Símbolo correspondiente al GameObject.
+	 * @return SYMBOL.
 	 */
 	@Override
 	protected String getSymbol() {
@@ -85,13 +88,9 @@ public class Zombie extends GameObject {
 		return Messages.ZOMBIE_DESCRIPTION.formatted(getName(),SPEED, DAMAGE,ENDURANCE);
 
 	}
-	/**
-	 * Realiza las acciones correspondientes una vez añadido el objeto
-	 */
+	
 	public void onEnter() {}
-	/**
-	 * Realiza las acciones correspondientes una vez eliminado el objeto
-	 */
+	
 	@Override
 	public void onExit() {//Cuando muere se ejecuta su acción e informa al juego de que ha muerto
 		delayedAction();
@@ -135,6 +134,10 @@ public class Zombie extends GameObject {
 	public int getEndurance() 
 	{
 		return ENDURANCE;
+	}
+	@Override
+	public boolean fillsPosition() {
+		return true;
 	}
 }
 

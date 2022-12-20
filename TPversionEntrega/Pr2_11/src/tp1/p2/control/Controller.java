@@ -3,11 +3,14 @@ package tp1.p2.control;
 import static tp1.p2.view.Messages.debug;
 import static tp1.p2.view.Messages.error;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 import tp1.p2.logic.Game;
 import tp1.p2.view.GamePrinter;
 import tp1.p2.view.Messages;
+import tp1.p2.control.exceptions.RecordException;
+import tp1.p2.control.exceptions.GameException;
 
 /**
  * Accepts user input and coordinates the game execution logic.
@@ -32,6 +35,11 @@ public class Controller {
 	private void printGame() {
 		System.out.println(gamePrinter);
 	}
+	
+	public void printRecord() throws RecordException, IOException
+	{
+		System.out.println(gamePrinter.setRecord())
+;	}
 
 	/**
 	 * Prints the final message once the match is finished.
@@ -58,31 +66,44 @@ public class Controller {
 	/**
 	 * Runs the game logic.
 	 */
-	public void run() {
+	public void run() throws GameException, IOException {
 		boolean refreshDisplay = true;
-		game.reset();
-		while (!game.isFinished() && !game.isPlayerQuits()) {
+		try 
+		{
+			game.reset();
+		}
+		catch(GameException g)
+		{
+			g.getMessage();
+		}
+		
+		while (!game.isFinished() && !game.isPlayerQuits()) 
+		{
 
 			// 1. Draw
-			if (refreshDisplay) {
+			if (refreshDisplay) 
+			{
 				printGame();
 			}
 
 			// 2. User action
 			String[] words = prompt();
 
-			if (words.length == 0) {
+			if (words.length == 0) 
+			{
 				System.out.println(error(Messages.UNKNOWN_COMMAND));
-			} else {
-				Command command = Command.parse(words);
-				if (command != null) {
-					// 3-4. Game Action & Update
-					command.create(words);
-					refreshDisplay = game.execute(command);
-					if(refreshDisplay)//Se actualiza el juego
-					game.update();
-				} else {
+			} 
+			else {
+				try 
+				{
 					refreshDisplay = false;
+				
+				Command command = Command.parse(words);
+				refreshDisplay = game.execute(command);
+				} 
+				catch (GameException e) 
+				{
+					System.out.println(error(e.getMessage()));
 				}
 			}
 		}
@@ -90,7 +111,7 @@ public class Controller {
 		if (refreshDisplay) {
 			printGame();
 		}
-
+		printRecord();
 		printEndMessage();
 	}
 

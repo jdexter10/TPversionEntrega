@@ -1,8 +1,8 @@
 package tp1.p2.logic.gameobjects;
 
-import tp1.p2.logic.GameItem;
 import tp1.p2.logic.GameWorld;
 import tp1.p2.view.Messages;
+import tp1.p2.logic.gameobjects.Peashooter;
 
 public class Peashooter extends Plant {
 	
@@ -21,47 +21,53 @@ public class Peashooter extends Plant {
 	{
 		
 	}
+	
+	//cambiar todos los comentarios del update();
 	@Override
 	public void update() 
 	{
 		boolean found = false;
-		int i = this.col + 1;//Empieza a buscar desde la posición siguiente a la que está la peashooter
-		if(isAlive()) {  
-			while(!found && i < game.NUM_COLS)//Mientras que no se haya encontrado un zombie al que disparar o mientras que no se hayan revisado todas las columnas de la misma fila
+		int i = this.col + 1;//Empieza a buscar desde la posicion siguiente a la que esta la peashooter
+		if(isAlive()) 
+		{  
+			while(!found && i < GameWorld.NUM_COLS)//Mientras que no se haya encontrado un zombie al que disparar o mientras que no se hayan revisado todas las columnas de la misma fila
 			{
-				GameItem item = game.getGameItemInPosition(i, row);//Se comprueba si hay un objeto en la posición buscada
-			    if(item != null && coolDown >= ATTACK_SPEED)//Si lo hay y la peashooter no está en cooldown le dispara
+				GameObject object = game.getObjectInPosition(i, row);//Se comprueba si hay un objeto en la posicion buscada
+			    if(object != null && cooldownCycles >= ATTACK_SPEED)//Si lo hay y la peashooter no está en cooldownCycles le dispara
 			    {  
-			    	found = item.receivePlantAttack(DAMAGE);//Le ataca y si no era un zombie se sigue el bucle
+			    	found = object.receivePlantAttack(DAMAGE);//Le ataca y si no era un zombie se sigue el bucle
 			    	if(found)
-			    	coolDown = 0;//Si ha disparado a un zombie se resetea su coolDwon
+			    	{
+			    		cooldownCycles = 0;//Si ha disparado a un zombie se resetea su cooldownCycles
+			    	}
 			    }
-			    i++;//Si no se ha encontrado se comprueba la siguiente fila
+			    ++i;//Si no se ha encontrado se comprueba la siguiente fila
 		    }
-				if(!found)//Si no ha disparado se suma uno de coolDown
-					coolDown++;
+			if(!found)//Si no ha disparado se suma uno de cooldownCycles
+			{
+				cooldownCycles++;
+			}
 	    }
 		
 	}
 	@Override
 	public boolean catchObject() 
 	{
-		// TODO Auto-generated method stub
 		return false;
 	}
 	/**
-	 * Devuelve el símbolo del GameObject correspondiente 
+	 * Retorna el SYMBOL del objeto.
 	 * 
-	 * @return <code>Símbolo</code> Símbolo correspondiente al GameObject.
+	 * @return <code>Simbolo</code> Simbolo correspondiente al GameObject.
 	 */
 	@Override
 	protected String getSymbol() {
 		return Messages.PEASHOOTER_SYMBOL;
 	}
 	/**
-	 * Devuelve la descripción del GameObject correspondiente 
+	 * Retorna el DESCRIPTION del objeto.
 	 * 
-	 * @return <code>Descripción</code> Descripción correspondiente al GameObject.
+	 * @return <code>Descripcion</code> Descripcion correspondiente al GameObject.
 	 */
 	@Override
 	public String getDescription() 
@@ -69,7 +75,7 @@ public class Peashooter extends Plant {
 		return Messages.PLANT_DESCRIPTION.formatted(getName(), COST,DAMAGE,ENDURANCE);
 	}
 	/**
-	 * Devuelve el nombre del GameObject correspondiente 
+	 * Retorna del NAME del objeto.
 	 * 
 	 * @return Nombre
 	 */
@@ -82,7 +88,13 @@ public class Peashooter extends Plant {
 	public int getCost() {
 		return COST;
 	}
-	
+	@Override
+	public Plant copy(GameWorld game, int col, int row) {
+		
+		Plant plant= new Peashooter(game, col, row);
+		
+		return plant;
+	}
 
 	
 	

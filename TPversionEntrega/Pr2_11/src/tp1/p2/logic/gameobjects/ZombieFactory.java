@@ -21,24 +21,24 @@ public class ZombieFactory {
 		return zombieIdx >= 0 || zombieIdx < AVAILABLE_ZOMBIES.size();
 	}
 
-	public static Zombie spawnZombie(int zombieIdx, GameWorld game,int col, int row) {
+	public static Zombie spawnZombie(int zombieIdx, GameWorld game,int col, int row) 
+	{
 		Zombie zombie = null;
-		//Creará una planta dependiendo del nombre introducido por consola 
-		switch(zombieIdx) 
+		if(zombieIdx == 0) 
 		{
-		case 0:
-			zombie = new Zombie(game,col,row);//Crea un zombie normal
-		break;
-		case 1:
-			zombie = new BucketHead(game,col,row);//Crea un Buckethead
-			break;
-		case 2:
-			zombie = new Sporty(game,col,row);//Crea un Sporty
-		break;
-		case 3:
-			zombie = new ExplosiveZombie(game,col,row);//Crea un ExplosiveZombie
-		break;
-		
+			zombie = new Zombie (game, col, row);//new Zombie normal
+		}
+		else if(zombieIdx == 1)
+		{
+			zombie = new BucketHead (game, col, row);//new Zombie Buckethead
+		}
+		else if(zombieIdx == 2)
+		{
+			zombie = new Sporty (game, col, row);//new Zombie Sporty
+		}
+		else if(zombieIdx == 3)
+		{
+			zombie = new ExplosiveZombie (game, col, row);//new Zombie ExplosiveZombie
 		}
 		return zombie;
 	}
@@ -50,6 +50,8 @@ public class ZombieFactory {
 	/*
 	 * Avoid creating instances of this class
 	 */
-	private ZombieFactory() {
+	private ZombieFactory()
+	{
+		
 	}
 }

@@ -2,6 +2,7 @@ package tp1.p2.logic.actions;
 
 import tp1.p2.logic.GameItem;
 import tp1.p2.logic.GameWorld;
+import tp1.p2.logic.gameobjects.GameObject;
 
 public class ExplosionAction implements GameAction {
 
@@ -12,6 +13,8 @@ public class ExplosionAction implements GameAction {
 	private int damage;
 	
 	private boolean attackZombies;
+	
+	private final static int POINTS = 20;
 
 	public ExplosionAction(int col, int row, int damage,boolean attackZombies) {
 		this.col = col;
@@ -19,57 +22,68 @@ public class ExplosionAction implements GameAction {
 		this.damage = damage;
 		this.attackZombies = attackZombies;
 	}
-	/**
-	 * Ejecuta la acción de explotar. Hace daño a sus respectivos enemigos en las posiciones cercanas al que ejecuta la acción
-	 * 
-	 * @param game Game donde se está ejecutando el juego 
-	 * 
-	 */
+	
 	@Override
 	public void execute(GameWorld game) {
-		GameItem item;
-		//Posiciones afectadas de arriba
+		GameObject object;
 		for(int i = col - 1; i <= col + 1;i++)
 		{
-			item = game.getGameItemInPosition(i, row - 1);
-		    if(item != null) {  
-		    	if(attackZombies)
-		    		item.receivePlantAttack(damage);
+			object = game.getObjectInPosition(i, row - 1);
+		    if(object != null) {  
+		    	if(attackZombies) 
+		    	{
+		    		object.receivePlantAttack(damage);
+		    		if(!object.isAlive()) 
+		    		{
+		    			game.setScore(POINTS);
+		    		}
+		    	}
 		    	else
-		    		item.receiveZombieAttack(damage);
+		    		object.receiveZombieAttack(damage);
 		    		
 		    }
 		}
-		//Posiciones afectafas a la izquierda y a la derecha
 		for(int i = row; i <= row + 1;i++)
 		{
-			//Línea de la izquierda
-			item = game.getGameItemInPosition(col - 1, i);
-		    if(item != null) {  
-		    	if(attackZombies)
-		    		item.receivePlantAttack(damage);
+			object = game.getObjectInPosition(col - 1, i);
+		    if(object != null) {  
+		    	if(attackZombies){
+		    		object.receivePlantAttack(damage);
+		    		if(!object.isAlive()) 
+		    		{
+		    			game.setScore(20);
+		    		}
+		    	}
 		    	else
-		    		item.receiveZombieAttack(damage);
+		    		object.receiveZombieAttack(damage);
 		    }
-		  //Línea de la derecha
-		    item = game.getGameItemInPosition(col + 1,  i);
-		    if(item != null) 
+		    object = game.getObjectInPosition(col + 1,  i);
+		    if(object != null) 
 		    {
-		    	if(attackZombies)
-		    		item.receivePlantAttack(damage);
+		    	if(attackZombies){
+		    		object.receivePlantAttack(damage);
+		    		if(!object.isAlive()) 
+		    		{
+		    			game.setScore(20);
+		    		}
+		    	}
 		    	else
-		    		item.receiveZombieAttack(damage);
+		    		object.receiveZombieAttack(damage);
 		    }
 		    
 		}
-		//Posición por debajo de la explosión
-		item = game.getGameItemInPosition(col, row + 1);
-		if(item != null) 
+		object = game.getObjectInPosition(col, row + 1);
+		if(object != null) 
 	    {
-			if(attackZombies)
-	    		item.receivePlantAttack(damage);
+			if(attackZombies){
+	    		object.receivePlantAttack(damage);
+	    		if(!object.isAlive()) 
+	    		{
+	    			game.setScore(20);
+	    		}
+	    	}
 	    	else
-	    		item.receiveZombieAttack(damage);
+	    		object.receiveZombieAttack(damage);
 	    }
 	}
 

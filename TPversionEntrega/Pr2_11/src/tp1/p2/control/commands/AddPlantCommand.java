@@ -1,14 +1,16 @@
 package tp1.p2.control.commands;
 
-import static tp1.p2.view.Messages.error;
-
 import tp1.p2.control.Command;
-import tp1.p2.control.ExecutionResult;
-import tp1.p2.logic.GameItem;
 import tp1.p2.logic.GameWorld;
 import tp1.p2.logic.gameobjects.Plant;
 import tp1.p2.logic.gameobjects.PlantFactory;
 import tp1.p2.view.Messages;
+import tp1.p2.control.commands.AddPlantCommand;
+import tp1.p2.control.exceptions.CommandParseException;
+import tp1.p2.control.exceptions.CommandExecuteException;
+import tp1.p2.control.exceptions.GameException;
+import tp1.p2.control.exceptions.NotEnoughCoinsException;
+import tp1.p2.logic.gameobjects.GameObject;
 
 public class AddPlantCommand extends Command implements Cloneable {
 
@@ -32,111 +34,82 @@ public class AddPlantCommand extends Command implements Cloneable {
 	public AddPlantCommand(boolean consumeCoins) {
 		this.consumeCoins = consumeCoins;
 	}
-	/**
-	 * Recibe el nombre del comando
-	 * 
-	 * 
-	 * @return Un String con el nombre del comando
-	 */
+	
 	@Override
 	protected String getName() {
 		return Messages.COMMAND_ADD_NAME;
 	}
-	/**
-	 * Recibe el shortCut del comando
-	 * 
-	 * 
-	 * @return Un String con el shortCut del comando
-	 */
+	
 	@Override
 	protected String getShortcut() {
 		return Messages.COMMAND_ADD_SHORTCUT;
 	}
-	/**
-	 * Recibe los detalles del comando
-	 * 
-	 * 
-	 * @return Un String con los detalles del comando
-	 */
+	
 	@Override
 	public String getDetails() {
 		return Messages.COMMAND_ADD_DETAILS;
 	}
-	/**
-	 * Recibe la información del comando
-	 * 
-	 * 
-	 * @return Un String con la información del comando
-	 */
+	
 	@Override
 	public String getHelp() {
 		return Messages.COMMAND_ADD_HELP;
 	}
-	/**
-	 * Comprueba si se puede añadir la planta. Si es así la añade
-	 * 
-	 * @param game Juego
-	 * 
-	 * @return ExecutionResult con true o con el mensaje de error
-	 */
+	
 	@Override
-	public ExecutionResult execute(GameWorld game) {
-		GameItem item = game.getGameItemInPosition(col , row);
+	public boolean execute(GameWorld game) throws GameException {
+		GameObject object = game.getObjectInPosition(col , row);
 		
-		//Si los valores introducidos no se encuentran entre los predeterminados
-		if(this.col >= GameWorld.NUM_COLS || this.row >= GameWorld.NUM_ROWS || this.col < 0 || this.row < 0) 
+		if(!game.isPositionEmpty(this.col,row) && (object.fillsPosition())) 
 		{
-			return new ExecutionResult(Messages.COMMAND_INCORRECT_PARAMETER_NUMBER);
+			throw new CommandExecuteException(Messages.INVALID_POSITION.formatted(this.col, this.row));
 		}
 		
-		//Si hay un zombie o una planta en la posición introducida
-		else if(!game.isPositionEmpty(this.col,row) && (item.receivePlantAttack(0) || item.receiveZombieAttack(0))) 
-		{
-			return new ExecutionResult(Messages.INVALID_POSITION);
-		}
-		
-		//Crea la planta con los valores introducidos
 		Plant plant = PlantFactory.spawnPlant(this.plantName, game, this.col, this.row);
 		
-		//Comprueba si hay suficientes sunCoins para comprar la planta
-		if(!game.tryToBuy(plant.getCost())) 
+		if(plant == null)
 		{
-			return new ExecutionResult(Messages.NOT_ENOUGH_COINS);
+			throw new CommandExecuteException(Messages.ERROR.formatted("Invalid plant name"));
 		}
 		
-		//Añade la planta al juego
-		game.addNpc(plant);
-		return new ExecutionResult(true);
+		try 
+		{
+			game.tryToBuy(plant.getCost());
+			game.addNpc(plant);
+			game.update();
+		}
+		catch(NotEnoughCoinsException coinsE) 
+		{
+			throw new NotEnoughCoinsException(Messages.NOT_ENOUGH_COINS);
+		}
+	
+		return true;
 	}
-	/**
-	 * Crea el comando según los parámetros introducidos por consola
-	 * 
-	 * @param parameters Parametros introducidos por consola
-	 * 
-	 * @return El comando creado
-	 */
+	
 	@Override
-	public Command create(String[] parameters) {
-		AddPlantCommand aux = new AddPlantCommand(false);
+	public Command create(String[] parameters) throws GameException{
+		AddPlantCommand plant = new AddPlantCommand(false);
 		int col,row;
-		col = Integer.parseInt(parameters[2]);
-		row = Integer.parseInt(parameters[3]);
-		
-		
-		
 		try {
-			aux = new AddPlantCommand(true);
-
+			plant = new AddPlantCommand(true);
+			col = Integer.parseInt(parameters[2]);
+			row = Integer.parseInt(parameters[3]);
 			this.plantName = parameters[1];
 			this.col = col;
 			this.row = row;
-			aux = (AddPlantCommand)this.clone();
+			plant = (AddPlantCommand)this.clone();
 		} 
 		catch (CloneNotSupportedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return aux;
+		catch(NumberFormatException nfe) 
+		{
+			throw new CommandParseException(Messages.INVALID_POSITION.formatted(parameters[1], parameters[2]), nfe);
+		}
+		if(this.col >= GameWorld.NUM_COLS || this.row >= GameWorld.NUM_ROWS || this.col < 0 || this.row < 0) 
+		{
+			throw new CommandParseException(Messages.COMMAND_INCORRECT_PARAMETER_NUMBER.formatted(this.col,this.row));
+		}
+		return plant;
 	}
 
 }

@@ -7,10 +7,10 @@ import java.util.Random;
 
 import tp1.p2.logic.actions.GameAction;
 import tp1.p2.logic.gameobjects.GameObject;
-import tp1.p2.logic.gameobjects.Sun;
 import tp1.p2.view.Messages;
+import tp1.p2.control.exceptions.NotEnoughCoinsException;
+import tp1.p2.control.exceptions.GameException;
 import tp1.p2.control.Command;
-import tp1.p2.control.ExecutionResult;
 import tp1.p2.control.Level;
 
 public class Game implements GameStatus, GameWorld{
@@ -19,34 +19,34 @@ public class Game implements GameStatus, GameWorld{
 
 	private Level level;
 	
-	private int cycle;
+	private int cycle = 0;
 
 	private GameObjectContainer container;
 	
 	private boolean playerQuits;
 	
-	private int sunCoins;
+	private int suncoins = START_SUNS;
 	
 	private Random rand;
 	
-	private ZombiesManager zombieManager;
+	private ZombiesManager zombiesManager;
 		
 	private Deque<GameAction> actions;
 	
 	private SunsManager sunsManager;
+	private int score;
 
 
-	public Game(long seed, Level level) {
-		
+	public Game(long seed, Level level) 
+	{	
 		this.seed = seed;
 		this.level = level;
-		
-
+		inicializar();
 	}
 	/**
 	 * Resets the game.
 	 */
-	public void reset() {
+	public void reset() throws GameException {
 		reset(this.level, this.seed);
 	}
 
@@ -56,55 +56,61 @@ public class Game implements GameStatus, GameWorld{
 	 * @param level {@link Level} Used to initialize the game.
 	 * @param seed Random seed Used to initialize the game.
 	 */
-	public void reset(Level level, long seed) {
+	public void reset(Level level, long seed) throws GameException {
 		System.out.println(String.format(Messages.CONFIGURED_LEVEL, level.name()));
 		System.out.println(String.format(Messages.CONFIGURED_SEED, seed));
-		sunCoins = START_SUNS;
+		suncoins = START_SUNS;
 		rand = new Random(seed);
 		cycle = 0;
 		playerQuits = false;
-		zombieManager = new ZombiesManager(this,level,rand);
+		zombiesManager = new ZombiesManager(this,level,rand);
 		container = new GameObjectContainer();
 		actions = new ArrayDeque<>();
 		sunsManager = new SunsManager(this,rand);
-
+		score = 0;
 	}
 
 	/**
-	 * Actualiza el juego, actualizando todos los objetos y datos del juego
+	 * Update general, contiene el de los objetos, listas etc..
+	 * @throws GameException 
 	 */
-	public void update() {
+	public void update() throws GameException {
 
 	    // 1. Execute pending actions
 			executePendingActions();
 
 			// 2. Execute game Actions
-			
-			zombieManager.addZombie();
-			//sunCoins += generatedSuns;
+			zombiesManager.addZombie();
+
 			// 3. Game object updates
 			container.update();
 			sunsManager.update();
 			// 4. & 5. Remove dead and execute pending actions
 			boolean deadRemoved = true;
-			while (deadRemoved || areTherePendingActions()) {
+			while (deadRemoved || areTherePendingActions()) 
+			{
 				// Execute pending actions
 				executePendingActions();
 				// Remove dead 
 				deadRemoved = this.container.removeDead();
-
 			}
-			//Actualiza el ciclo del juego
 			this.cycle++;
 
 			// 6. Notify commands that a new cycle started
 			Command.newCycle();
 	}
 	/**
-	 * Añade una acción que se ha llevado a cabo por un objeto del juego
+	 * inicializa las respectivas listas.
 	 * 
-	 * @param gameAction Acción a añadir.
 	 */
+	public void inicializar() {
+		zombiesManager = new ZombiesManager(this,level,rand);
+		container = new GameObjectContainer();
+		sunsManager = new SunsManager(this,rand);
+		actions = new ArrayDeque<>();
+	}
+	
+	
 	public void pushAction(GameAction gameAction) {
 	    this.actions.addLast(gameAction);
 	}
@@ -119,21 +125,12 @@ public class Game implements GameStatus, GameWorld{
 	private boolean areTherePendingActions() {
 	    return this.actions.size() > 0;
 	}
-	/**
-	 * Ejecuta el comando introducido.
-	 * 
-	 * @param command Comando a ejecutar.
-	 * 
-	 * @return <code>true</code> Si se debe imprimir el juego, <code>false</code>
-	 *         otherwise.
-	 */
+	
 	@Override
-	public boolean execute(Command command) 
+	public boolean execute(Command command) throws GameException 
 	{
-		ExecutionResult exRes = command.execute(this);
-		if(exRes.errorMessage() != null)
-		System.out.println(exRes.errorMessage());
-		return exRes.draw();
+		boolean print = command.execute(this);
+		return print;
 	}
 	/**
 	 * Draw a cell of the game.
@@ -148,71 +145,40 @@ public class Game implements GameStatus, GameWorld{
 	{
 		return container.positionToString(col,row);
 	}
-	/**
-	 * Comprueba si la posición introducida está libre.
-	 * 
-	 * @param col Posición de la columna a revisar.
-	 * @param row Posición de la fila a revisar.
-	 * 
-	 * @return <code>true</code> Si la posición está libre, <code>false</code>
-	 *         otherwise.
-	 */
+	
 	@Override
 	public boolean isPositionEmpty(int col, int row) 
 	{
 		return container.isPositionEmpty(col, row);
 	}
-	/**
-	 * Intenta coger un objeto del juego.
-	 * 
-	 * @param col Posición de la columna del objeto
-	 * @param row Posición de la fila del objeto
-	 * 
-	 * @return <code>true</code> Si se ha encontrado el objeto, <code>false</code>
-	 *         otherwise.
-	 */
+	
 	@Override
 	public boolean tryToCatchObject(int col, int row) {
 		
 		return container.catchObjects(col, row);
 	}
-	/**
-	 * Añade un item al contenedor.
-	 * 
-	 * @param item Item para añadir.
-	 * 
-	 * @return <code>true</code> si se ha podido añadir, <code>false</code>
-	 *         otherwise.
-	 */
+	
 	@Override
 	public boolean addItem(GameObject item) {
 		container.add(item);
 		return true;
 	}
-	/**
-	 * Devuelve el item en la posición introducida.
-	 * 
-	 * @param col Posición de la columna del objeto
-	 * @param row Posición de la fila del objeto.
-	 * 
-	 * @return <code>GameItem</code> Si hay un item en esa posición, <code>null</code>
-	 *         otherwise.
-	 */
+	
 	@Override
 	public GameItem getGameItemInPosition(int col, int row) 
 	{
-		GameItem aux = container.getGameItemInPosition(col, row); ;
-		return aux;
+		GameItem item = container.getGameItemInPosition(col, row); ;
+		return item;
 	}
 	/**
-	 * Get available suncoins
+	 * Get available suncoins.
 	 * 
-	 * @return the available suncoins
+	 * @return available suncoins
 	 */
 	@Override
 	public int getSuncoins() 
 	{
-		return this.sunCoins;
+		return this.suncoins;
 	}
 	/**
 	 * Get the number of generated suns.
@@ -234,19 +200,16 @@ public class Game implements GameStatus, GameWorld{
 		return sunsManager.getCatchedSuns();
 	}
 	/**
-	 * Comprueba si el jugador se ha ido del juego
+	 * Revisa si el Jugador ha accionado exit() del game.
 	 * 
-	 * @return {@code true} Si el jugador se ha retirado {@code false} otherwise.
+	 * @return {@code true} Si Jugador exit() {@code false} sino.
 	 */
 	@Override
 	public boolean isPlayerQuits() 
 	{
 		return this.playerQuits;
 	}
-	/**
-	 * Ejecuta la acción exit, saliendo del juego.
-	 * 
-	 */
+	
 	@Override
 	public void playerQuits() 
 	{
@@ -271,42 +234,30 @@ public class Game implements GameStatus, GameWorld{
 	@Override
 	public int getRemainingZombies() 
 	{
-		return zombieManager.getRemainingZombies();
+		return zombiesManager.getRemainingZombies();
 	}
-	/**
-	 * Comprueba si todos los zombies han muerto
-	 * 
-	 * @return {@code true} Si todos los zombies han muerto {@code false} otherwise.
-	 */
+	
 	@Override
 	public boolean allZombiesDead() 
 	{
-		if(zombieManager.getCurrentZombies() == 0 && zombieManager.getRemainingZombies() == 0) 
+		if(zombiesManager.getCurrentZombies() == 0 && zombiesManager.getRemainingZombies() == 0) 
 		{
 			return true;
 		}
 		return false;
 	}
-	/**
-	 * Comprueba si el jugador ha muerto
-	 * 
-	 * @return {@code true} Si los zombies han llegado al final {@code false} otherwise.
-	 */
+	
 	@Override
 	public boolean deadPlayer() 
 	{
-		for(GameObject o: container.getGameObjects()) 
+		for(GameObject g: container.getGameObjects()) 
 		{
-			if(o.getCol()== -1)
+			if(g.getCol()== -1)
 				return true;
 		}
 		return false;
 	}
-	/**
-	 * Comprueba si el juego se ha terminado
-	 * 
-	 * @return {@code true} Si el jeugo se ha terminado{@code false} otherwise.
-	 */
+	
 	@Override
 	public boolean isFinished() 
 	{
@@ -317,23 +268,14 @@ public class Game implements GameStatus, GameWorld{
 		}
 		return finished;
 	}
-	/**
-	 * Añade un sol al juego
-	 */
+	
 	@Override
 	public void addSun() {
 		
 		sunsManager.addSun();
 		
 	}
-	/**
-	 * Comprueba si se puede introducir un GameObject. Si es así lo añade al contenedor.
-	 * 
-	 * @param gameObject Objeto del juego a introducir
-	 * 
-	 * @return <code>true</code> Si se ha podido introducir, <code>false</code>
-	 *         otherwise.
-	 */
+	
 	@Override
 	public boolean addNpc(GameObject gameObject) 
 	{
@@ -344,54 +286,53 @@ public class Game implements GameStatus, GameWorld{
 			return true;
 		}
 		else
-		return false;
-		
+		return false;	
 	}
-	/**
-	 * Comprueba si el precio de la planta a añadir es menor que el numero de monedas que hay en el juego. 
-	 * 
-	 * @param cost Coste de la planta que se quiere introducir
-	 * 
-	 * @return <code>true</code> Si se ha podido comprar <code>false</code>
-	 *         otherwise.
-	 */
+	
 	@Override
-	public boolean tryToBuy(int cost) {
-		if(cost > sunCoins)
-			return false;
+	public boolean tryToBuy(int cost)throws GameException  {
+		boolean ok = true;
+		if(suncoins < cost) 
+		{
+			ok = false;
+			throw new NotEnoughCoinsException(Messages.NOT_ENOUGH_COINS);
+		}
 		else 
-			sunCoins -= cost;
-		return true;
+		{
+			suncoins -= cost;
+		}
+		return ok;
 	}
-	/**
-	 * Informa de que un zombie ha muerto al zombieManager
-	 */
+	
 	@Override
 	public void zombieDied() {
-		zombieManager.zombieDied();
+		zombiesManager.zombieDied();
 		
 	}
-	/**
-	 * Devuelve el GameObject en la posición introducida
-	 * 
-	 * @param col Posición de la columna introducida.
-	 * @param row Posición de la fila introducida.
-	 * 
-	 * @return <code>GameObject</code> Si hay un objeto en la posición introducida<code>null</code>
-	 *         otherwise.
-	 */
+	
 	@Override
 	public GameObject getObjectInPosition(int col, int row) {
 		return container.getObjectInPosition(col, row);
 	}
-	/**
-	 * Informa e introduce los soles que se han cogido al sunsManager.
-	 * 
-	 * @param sunValue Número de soles a introducir.
-	 */
+	
 	public void addCatchedSuns(int value) 
 	{
-		this.sunCoins += value;
+		this.suncoins += value;
 		sunsManager.setCatchedSuns(value);
+	}
+	@Override
+	public void setScore(int points) 
+	{
+		score += points;	
+	}
+	
+	@Override
+	public String getLevelName() 
+	{
+		return this.level.name();
+	}
+	@Override
+	public int getScore() {
+		return score;
 	}
 }

@@ -1,7 +1,5 @@
 	package tp1.p2.logic.gameobjects;
 
-import static tp1.p2.view.Messages.status;
-
 import tp1.p2.logic.GameItem;
 import tp1.p2.logic.GameWorld;
 //import tp1.p2.logic.actions.AddGameItemAction;
@@ -18,16 +16,18 @@ public abstract class GameObject implements GameItem {
 	protected int row;		
 	
 	protected int lives;
-	protected int coolDown;
+	protected int cooldownCycles;
 
-	GameObject() {
+	GameObject() 
+	{
+		
 	}
 
 	GameObject(GameWorld game, int col, int row) {
 		this.game = game;
 		this.col = col;
 		this.row = row;
-		this.coolDown = 0;
+		this.cooldownCycles = 0;
 	}
 	/**
 	 * Informa de si el GameObject se encuentra en la posición introducida 
@@ -63,10 +63,16 @@ public abstract class GameObject implements GameItem {
 	 */
 	public boolean isAlive() 
 	{
-		if(this.lives > 0) 
-			return true;
-		else 
-			return false;
+		boolean vivo;
+		if(this.lives > 0)
+		{
+			vivo = true;
+		}
+		else
+		{
+			vivo = false;
+		}
+		return vivo;
 	}
 	/**
 	 * Hace daño al GameObject 
@@ -85,42 +91,30 @@ public abstract class GameObject implements GameItem {
 	 *         otherwise.
 	 */
 	public String toString() {
-		if (isAlive()) {
+		if (isAlive()) 
+		{
 			return getSymbol();
-		} else {
+		} 
+		else 
+		{
 			return "";
 		}
 	}	
-	/**
-	 * Devuelve el símbolo del GameObject correspondiente 
-	 * 
-	 * @return <code>Símbolo</code> Símbolo correspondiente al GameObject.
-	 */
+	
 	abstract protected String getSymbol();
-	/**
-	 * Devuelve la descripción del GameObject correspondiente 
-	 * 
-	 * @return <code>Descripción</code> Descripción correspondiente al GameObject.
-	 */
+	
 	abstract public String getDescription();
-	/**
-	 * Actualiza la información del objeto
-	 */
+	
 	abstract public void update();
-	/**
-	 * Realiza las acciones correspondientes una vez añadido el objeto
-	 */
+	
 	abstract public void onEnter();
-	/**
-	 * Realiza las acciones correspondientes una vez eliminado el objeto
-	 */
+	
 	abstract public void onExit();
-	/**
-	 * Ejecuta la acción que lleva a cabo.
-	 */
+	
 	public void delayedAction()
 	{
 		
 	}
+	abstract public boolean fillsPosition();
 	
 }

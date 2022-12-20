@@ -16,21 +16,12 @@ public class Sporty extends Zombie{
 	{
 		
 	}
-	/**
-	 * Devuelve el nombre del GameObject correspondiente 
-	 * 
-	 * @return Nombre
-	 */
+	
 	@Override
 	public String getName() 
 	{
 		return Messages.SPORTY_ZOMBIE_NAME;
 	}
-	/**
-	 * Devuelve el símbolo del GameObject correspondiente 
-	 * 
-	 * @return <code>Símbolo</code> Símbolo correspondiente al GameObject.
-	 */
 	@Override
 	protected String getSymbol() {
 		return Messages.SPORTY_ZOMBIE_SYMBOL;

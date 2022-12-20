@@ -18,41 +18,36 @@ public class PlantFactory {
 	/* @formatter:on */
 
 	public static boolean isValidPlant(String plantName) {
-		for (Plant p : AVAILABLE_PLANTS) {
-			if(p.getName() == plantName)
+		for (Plant p : AVAILABLE_PLANTS) 
+		{
+			if(plantName.equals(p.getName()) || plantName.equals(p.getSymbol().toLowerCase()) || plantName.equals(p.getName().toLowerCase()))
 				return true;
 		}
-
 		return false;
 	}
 
 	public static Plant spawnPlant(String plantName, GameWorld game, int col, int row) {
-		Plant aux = null;
-		switch(plantName)//Creará una planta dependiendo del nombre introducido por consola 
+		Plant plant = null;
+		if(!isValidPlant(plantName)) return plant;
+		else 
 		{
-		case "s":
-			aux = new Sunflower(game,col,row);//Añade un girasol
-		break;
-		case "p":
-			aux = new Peashooter(game,col,row);//Añade un Lanza guisantes
-		break;
-		case "c":
-			aux = new CherryBomb(game,col,row);//Añade una cereza
-		break;
-		case "w":
-			aux = new WallNut(game,col,row);//Añade una nuez
-			break;
+			for (Plant p : AVAILABLE_PLANTS) {
+				if(plantName.equals(p.getName()) ||plantName.equals(p.getSymbol().toLowerCase()) || plantName.equals(p.getName().toLowerCase()))
+					plant = p.copy(game,col,row);
+			}
 		}
-		return aux;	
+		return plant;
 	}
 
-	public static List<Plant> getAvailablePlants() {
+	public static List<Plant> getAvailablePlants() 
+	{
 		return Collections.unmodifiableList(AVAILABLE_PLANTS);
 	}
-
 	/*
 	 * Avoid creating instances of this class
 	 */
-	private PlantFactory() {
+	private PlantFactory() 
+	{
+		
 	}
 }
